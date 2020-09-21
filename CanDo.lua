@@ -10,8 +10,8 @@ function CanDo_CreateInitialCharacterData()
                 display = {
                     arrangement = {
                         type = "grid",
-                        rows = 4,
-                        columns = 3,
+                        rows = 0,
+                        columns = 2,
                         buttonSize = 40,
                         padding = 5,
                     },

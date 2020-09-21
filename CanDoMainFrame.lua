@@ -73,6 +73,15 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
     local itemCount = table.getn(frame.items);
     local rowCount = frame.display.arrangement.rows;
     local colCount = frame.display.arrangement.columns;
+
+    if colCount == 0 then
+        -- should have rowCount
+        colCount = math.ceil(itemCount / rowCount);
+    elseif rowCount == 0 then
+        -- should have colCount
+        rowCount = math.ceil(itemCount / colCount);
+    end
+
     local padding = frame.display.arrangement.padding;
     local buttonSize = frame.display.arrangement.buttonSize;
     local totalWidth = buttonSize * colCount + padding * (colCount + 1);
@@ -112,18 +121,16 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
     activeFrame.items = {};
 
     for k, v in pairs(frame.items) do
-        CanDoMainFrame_CreateCanDoItem(k, v, frame, activeFrame);
+        CanDoMainFrame_CreateCanDoItem(k, rowCount, colCount, v, frame, activeFrame);
     end
 end
 
-function CanDoMainFrame_CreateCanDoItem(itemNum, itemData, frame, activeFrame)
+function CanDoMainFrame_CreateCanDoItem(itemNum, rowCount, colCount, itemData, frame, activeFrame)
     -- will need to modify to support different sources
     local slot = itemData.source.slot;
 
     local padding = frame.display.arrangement.padding;
     local buttonSize = frame.display.arrangement.buttonSize;
-    local rowCount = frame.display.arrangement.rows;
-    local colCount = frame.display.arrangement.columns;
 
     local type, gid = GetActionInfo(slot);
     local name, rank, icon, castTime, minRange, maxRange = "";
