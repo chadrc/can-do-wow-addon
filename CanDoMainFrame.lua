@@ -155,10 +155,10 @@ function CanDoMainFrame_CreateCanDoItem(itemNum, rowCount, colCount, itemData, f
     local offsetY = row * (buttonSize + padding) + padding;
 
     local smallFrame = CreateFrame("Button", nil, activeFrame.parentFrame);
+    smallFrame:SetSize(buttonSize, buttonSize);
 
     if texture then
         smallFrame.texture = smallFrame:CreateTexture();
-        smallFrame:SetSize(buttonSize, buttonSize);
         smallFrame.texture:SetPoint("CENTER");
         smallFrame.texture:SetTexture(texture);
         smallFrame.texture:SetSize(buttonSize, buttonSize);
