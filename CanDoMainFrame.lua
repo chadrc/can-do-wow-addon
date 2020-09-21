@@ -62,41 +62,48 @@ end
 
 function CanDoMainFrame_CreateFrames(data)
     for k, v in pairs(data.frames) do
-        if v.display.arrangement.type == "grid" then
-            ActiveData.frames[k] = {}
-            CanDoMainFrame_CreateGridFrame(v, ActiveData.frames[k]);
-        end
+        ActiveData.frames[k] = {}
+        CanDoMainFrame_CreateGridFrame(v, ActiveData.frames[k]);
     end
 end
 
 function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
     local itemCount = table.getn(frame.items);
-    local rowCount = frame.display.arrangement.rows;
-    local colCount = frame.display.arrangement.columns;
 
-    if colCount == 0 then
-        -- should have rowCount
-        colCount = math.ceil(itemCount / rowCount);
-    elseif rowCount == 0 then
-        -- should have colCount
-        rowCount = math.ceil(itemCount / colCount);
-    end
-
-    local padding = frame.display.arrangement.padding;
     local buttonSize = frame.display.arrangement.buttonSize;
-    local totalWidth = buttonSize * colCount + padding * (colCount + 1);
-    local totalHeight = buttonSize * rowCount + padding * (rowCount + 1);
+
+    if frame.display.arrangement.type == "grid" then
+        local rowCount = frame.display.arrangement.rows;
+        local colCount = frame.display.arrangement.columns;
+        local padding = frame.display.arrangement.padding;
+        activeFrame.totalWidth = buttonSize * colCount + padding * (colCount + 1);
+        activeFrame.totalHeight = buttonSize * rowCount + padding * (rowCount + 1);
+    
+        if colCount == 0 then
+            -- should have rowCount
+            colCount = math.ceil(itemCount / rowCount);
+        elseif rowCount == 0 then
+            -- should have colCount
+            rowCount = math.ceil(itemCount / colCount);
+        end
+
+        activeFrame.colCount = colCount;
+        activeFrame.rowCount = rowCount;
+    elseif frame.display.arrangement.type == "circle" then
+        activeFrame.angleStep = 360 / itemCount;
+        activeFrame.radius = frame.display.arrangement.diameter / 2 - buttonSize / 2;
+        activeFrame.totalWidth = frame.display.arrangement.diameter;
+        activeFrame.totalHeight = activeFrame.totalWidth;
+    end
 
     local parentFrame = CreateFrame("Frame", "CanDoFrame_" .. frame.name, UIParent);
     parentFrame:SetBackdrop({
         bgFile = "Interface/Tooltips/UI-Tooltip-Background",          
         tile = true
     });
-    
-    -- parentFrame:SetScript("OnUpdate", CanDoMainFrame_OnUpdate);
 
     parentFrame:SetBackdropColor(0,0,0,.5);
-    parentFrame:SetSize(totalWidth, totalHeight);
+    parentFrame:SetSize(activeFrame.totalWidth, activeFrame.totalHeight);
     if frame.display.positioning.type == "absolute" then
         parentFrame:SetPoint(
             frame.display.positioning.anchor, 
@@ -122,17 +129,28 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
 
     for k, v in pairs(frame.items) do
         local actionButton = CanDoMainFrame_CreateCanDoItem(v, frame, activeFrame);
-
-        local i = k - 1;
-        local row = math.floor(i / colCount);
-        local col = i % colCount;
-    
-        local offsetX = col * (buttonSize + padding) + padding;
-        local offsetY = row * (buttonSize + padding) + padding;
-
-        actionButton.frame:SetPoint("TOPLEFT", activeFrame.parentFrame, "TOPLEFT", offsetX, -offsetY);
-    
         activeFrame.items[table.getn(activeFrame.items) + 1] = actionButton;
+
+        if frame.display.arrangement.type == "grid" then
+            local i = k - 1;
+            local row = math.floor(i / activeFrame.colCount);
+            local col = i % activeFrame.colCount;
+        
+            local offsetX = col * (buttonSize + frame.display.arrangement.padding) + frame.display.arrangement.padding;
+            local offsetY = row * (buttonSize + frame.display.arrangement.padding) + frame.display.arrangement.padding;
+    
+            actionButton.frame:SetPoint("TOPLEFT", activeFrame.parentFrame, "TOPLEFT", offsetX, -offsetY);
+        elseif frame.display.arrangement.type == "circle" then
+            local radius = frame.display.arrangement.diameter / 2;
+            -- cos = x / h
+            -- sin = y / h
+            local angle = (k - 1) * activeFrame.angleStep;
+
+            local y = math.sin(math.rad(angle)) * activeFrame.radius;
+            local x = math.cos(math.rad(angle)) * activeFrame.radius;
+            CanDo_Print(x, ", ", y);
+            actionButton.frame:SetPoint("CENTER", activeFrame.parentFrame, "CENTER", x, y);
+        end
     end
 end
 

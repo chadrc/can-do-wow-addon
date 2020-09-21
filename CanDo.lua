@@ -8,18 +8,18 @@ function CanDo_CreateInitialCharacterData()
             {
                 name = "Main Group",
                 display = {
-                    arrangement = {
-                        type = "grid",
-                        rows = 0,
-                        columns = 2,
-                        buttonSize = 40,
-                        padding = 5,
-                    },
                     -- arrangement = {
-                    --     type = "circle",
-                    --     diameter = 100,
+                    --     type = "grid",
+                    --     rows = 0,
+                    --     columns = 2,
                     --     buttonSize = 40,
+                    --     padding = 5,
                     -- },
+                    arrangement = {
+                        type = "circle",
+                        diameter = 250,
+                        buttonSize = 40,
+                    },
                     -- values match call to SetPoint on Frame widgets
                     positioning = {
                         type = "relative",
