@@ -51,9 +51,9 @@ function CanDoMainFrame_OnUpdate(self, elapsed)
                 end
     
                 if usable and not onCooldown then
-                    item.frame.texture:SetAlpha(1);
+                    item.frame:SetAlpha(1);
                 else 
-                    item.frame.texture:SetAlpha(.25);
+                    item.frame:SetAlpha(.25);
                 end
             end
         end
@@ -147,7 +147,7 @@ function CanDoMainFrame_CreateCanDoItem(itemNum, itemData, frame, activeFrame)
         smallFrame.texture:SetSize(buttonSize, buttonSize);
         smallFrame.texture:SetAlpha(1);
         if not IsUsableAction(slot) then
-            smallFrame.texture:SetAlpha(.25);
+            smallFrame:SetAlpha(.25);
         end
 
         if not IsPlayerSpell(gid) then
