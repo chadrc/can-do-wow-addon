@@ -21,11 +21,38 @@ function CanDoMainFrame_OnEvent(self, event, ...)
             CanDo_Print("Character data loaded.");
         end
 
+        self:SetScript("OnUpdate", CanDoMainFrame_OnUpdate);
+        self:Show();
+
         -- Overwrite for testing
         CanDoCharacterData = CanDo_CreateInitialCharacterData();
 
         -- Create bars
         CanDoMainFrame_CreateFrames(CanDoCharacterData);
+    end
+end
+
+function CanDoMainFrame_OnUpdate(self, elapsed)
+    for _, frame in pairs(ActiveData.frames) do
+        for _, item in pairs(frame.items) do
+            if item.frame.texture then
+                local usable = IsUsableAction(item.slot);
+
+                local start, duration, enable, modRate = GetActionCooldown(item.slot);
+                local onCooldown = duration >= 1.4;
+                
+                if item.maxCharges > 1 then
+                    local currentCharges = GetActionCharges(item.slot);
+                    item.chargeText:SetText(currentCharges);
+                end
+    
+                if usable and not onCooldown then
+                    item.frame.texture:SetAlpha(1);
+                else 
+                    item.frame.texture:SetAlpha(.25);
+                end
+            end
+        end
     end
 end
 
@@ -52,6 +79,9 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
         bgFile = "Interface/Tooltips/UI-Tooltip-Background",          
         tile = true
     });
+    
+    -- parentFrame:SetScript("OnUpdate", CanDoMainFrame_OnUpdate);
+
     parentFrame:SetBackdropColor(0,0,0,.5);
     parentFrame:SetSize(totalWidth, totalHeight);
     if frame.display.positioning.type == "relative" then
