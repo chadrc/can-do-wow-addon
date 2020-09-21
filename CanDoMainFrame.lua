@@ -8,7 +8,10 @@ local ActiveData = {
 function CanDoMainFrame_OnLoad(self, event, ...)
     CanDo_Print("CanDo loaded");
     self:RegisterEvent("ADDON_LOADED");
-    self:RegisterEvent("PLAYER_LOGOUT");
+    -- self:RegisterEvent("PLAYER_LOGIN");
+    -- self:RegisterEvent("PLAYER_LOGOUT");
+    -- self:RegisterEvent("VARIABLES_LOADED");
+    self:RegisterEvent("PLAYER_ENTERING_WORLD");
 end
 
 function CanDoMainFrame_OnEvent(self, event, ...)
@@ -26,7 +29,8 @@ function CanDoMainFrame_OnEvent(self, event, ...)
 
         -- Overwrite for testing
         CanDoCharacterData = CanDo_CreateInitialCharacterData();
-
+    elseif event == "VARIABLES_LOADED" then
+    elseif event == "PLAYER_ENTERING_WORLD" then
         -- Create bars
         CanDoMainFrame_CreateFrames(CanDoCharacterData);
     end
