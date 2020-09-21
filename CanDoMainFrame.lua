@@ -121,40 +121,41 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
     activeFrame.items = {};
 
     for k, v in pairs(frame.items) do
-        CanDoMainFrame_CreateCanDoItem(k, rowCount, colCount, v, frame, activeFrame);
+        local actionButton = CanDoMainFrame_CreateCanDoItem(v, frame, activeFrame);
+
+        local i = k - 1;
+        local row = math.floor(i / colCount);
+        local col = i % colCount;
+    
+        local offsetX = col * (buttonSize + padding) + padding;
+        local offsetY = row * (buttonSize + padding) + padding;
+
+        actionButton.frame:SetPoint("TOPLEFT", activeFrame.parentFrame, "TOPLEFT", offsetX, -offsetY);
+    
+        activeFrame.items[table.getn(activeFrame.items) + 1] = actionButton;
     end
 end
 
-function CanDoMainFrame_CreateCanDoItem(itemNum, rowCount, colCount, itemData, frame, activeFrame)
+function CanDoMainFrame_CreateCanDoItem(itemData, frame, activeFrame)
     -- will need to modify to support different sources
     local slot = itemData.source.slot;
 
-    local padding = frame.display.arrangement.padding;
     local buttonSize = frame.display.arrangement.buttonSize;
 
     local type, gid = GetActionInfo(slot);
     local name, rank, icon, castTime, minRange, maxRange = "";
-    local usable = false;
     local texture = GetActionTexture(slot);
     
     if type == "spell" then
         name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(gid);
-        usable = IsUsableSpell(gid);
-        -- print("Texture: " .. texture);
+        -- print("Tex ture: " .. texture);
     elseif type ~= nil then
         -- print("Slot " .. s .. " has type " .. type)
     else
         -- print("Slot " .. s .. " is empty")
     end
 
-    local i = itemNum - 1;
-    local row = math.floor(i / colCount);
-    local col = i % colCount;
-
-    local offsetX = col * (buttonSize + padding) + padding;
-    local offsetY = row * (buttonSize + padding) + padding;
-
-    local smallFrame = CreateFrame("Button", nil, activeFrame.parentFrame);
+    local smallFrame = CreateFrame("Button", "CanDoActionButton_" .. name, activeFrame.parentFrame);
     smallFrame:SetSize(buttonSize, buttonSize);
 
     if texture then
@@ -189,7 +190,7 @@ function CanDoMainFrame_CreateCanDoItem(itemNum, rowCount, colCount, itemData, f
         smallFrame:SetBackdropColor(0,0,0,.5);
     end
 
-    local chargeText = smallFrame:CreateFontString("eCoordinatesFontString", "ARTWORK", "GameFontNormal");
+    local chargeText = smallFrame:CreateFontString("CanDoActionButtonText_" .. name, "ARTWORK", "GameFontNormal");
     chargeText:SetParent(smallFrame);
     chargeText:SetPoint("CENTER", smallFrame, "CENTER", 0, 0);
     chargeText:SetFont(chargeText:GetFont(), buttonSize / 2, "OUTLINE");
@@ -204,9 +205,7 @@ function CanDoMainFrame_CreateCanDoItem(itemNum, rowCount, colCount, itemData, f
         chargeText:Hide();
     end
 
-    smallFrame:SetPoint("TOPLEFT", activeFrame.parentFrame, "TOPLEFT", offsetX, -offsetY);
-    
-    local actionButton = {
+    return {
         id = gid,
         frame = smallFrame,
         name = name,
@@ -219,6 +218,4 @@ function CanDoMainFrame_CreateCanDoItem(itemNum, rowCount, colCount, itemData, f
         chargeText = chargeText,
         maxCharges = maxCharges,
     };
-
-    activeFrame.items[table.getn(activeFrame.items) + 1] = actionButton;
 end

@@ -15,6 +15,11 @@ function CanDo_CreateInitialCharacterData()
                         buttonSize = 40,
                         padding = 5,
                     },
+                    -- arrangement = {
+                    --     type = "circle",
+                    --     diameter = 100,
+                    --     buttonSize = 40,
+                    -- },
                     -- values match call to SetPoint on Frame widgets
                     positioning = {
                         type = "relative",
