@@ -15,17 +15,20 @@ function CanDo_CreateInitialCharacterData()
                         buttonSize = 40,
                         padding = 5,
                     },
+                    -- values match call to SetPoint on Frame widgets
                     positioning = {
-                        type = "absolute",
+                        type = "relative",
+                        anchor = "CENTER",
+                        relativeAnchor = "BOTTOMLEFT",
                         -- values in percentage of screen
-                        x = .5,
-                        y = .25,
+                        offsetX = .5,
+                        offsetY = .25,
                     },
                     -- positioning = {
-                    --     type = "relative",
-                    --     -- values match call to SetPoint on Frame widgets
+                    --     type = "absolute",
                     --     anchor = "CENTER",
                     --     relativeAnchor = "CENTER",
+                    --     -- absolute pixel values
                     --     offsetX = 0,
                     --     offsetY = -200,
                     -- },

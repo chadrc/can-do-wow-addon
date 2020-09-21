@@ -88,21 +88,21 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
 
     parentFrame:SetBackdropColor(0,0,0,.5);
     parentFrame:SetSize(totalWidth, totalHeight);
-    if frame.display.positioning.type == "relative" then
+    if frame.display.positioning.type == "absolute" then
         parentFrame:SetPoint(
             frame.display.positioning.anchor, 
-            "UIParent", 
+            parentFrame:GetParent(),
             frame.display.positioning.relativeAnchor, 
             frame.display.positioning.offsetX,
             frame.display.positioning.offsetY
         );
-    elseif frame.display.positioning.type == "absolute" then
-        local x = parentFrame:GetParent():GetWidth() * frame.display.positioning.x;
-        local y = parentFrame:GetParent():GetHeight() * frame.display.positioning.y;
+    elseif frame.display.positioning.type == "relative" then
+        local x = parentFrame:GetParent():GetWidth() * frame.display.positioning.offsetX;
+        local y = parentFrame:GetParent():GetHeight() * frame.display.positioning.offsetY;
         parentFrame:SetPoint(
-            "CENTER",
+            frame.display.positioning.anchor,
             parentFrame:GetParent(),
-            "BOTTOMLEFT",
+            frame.display.positioning.relativeAnchor,
             x,
             y
         );
