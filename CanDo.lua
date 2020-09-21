@@ -16,12 +16,19 @@ function CanDo_CreateInitialCharacterData()
                         padding = 5,
                     },
                     positioning = {
-                        type = "relative",
-                        anchor = "CENTER",
-                        relativeAnchor = "CENTER",
-                        offsetX = 0,
-                        offsetY = -200,
-                    }
+                        type = "absolute",
+                        -- values in percentage of screen
+                        x = .5,
+                        y = .25,
+                    },
+                    -- positioning = {
+                    --     type = "relative",
+                    --     -- values match call to SetPoint on Frame widgets
+                    --     anchor = "CENTER",
+                    --     relativeAnchor = "CENTER",
+                    --     offsetX = 0,
+                    --     offsetY = -200,
+                    -- },
                 },
                 items = {
                     {

@@ -96,6 +96,16 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
             frame.display.positioning.offsetX,
             frame.display.positioning.offsetY
         );
+    elseif frame.display.positioning.type == "absolute" then
+        local x = parentFrame:GetParent():GetWidth() * frame.display.positioning.x;
+        local y = parentFrame:GetParent():GetHeight() * frame.display.positioning.y;
+        parentFrame:SetPoint(
+            "CENTER",
+            parentFrame:GetParent(),
+            "BOTTOMLEFT",
+            x,
+            y
+        );
     end
     
     activeFrame.parentFrame = parentFrame;
