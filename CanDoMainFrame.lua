@@ -51,9 +51,9 @@ function CanDoMainFrame_OnUpdate(self, elapsed)
                 end
     
                 if usable and not onCooldown then
-                    item.frame:SetAlpha(1);
+                    item.frame:SetAlpha(frame.frameData.display.activeButtonAlpha);
                 else 
-                    item.frame:SetAlpha(.25);
+                    item.frame:SetAlpha(frame.frameData.display.inactiveButtonAlpha);
                 end
             end
         end
@@ -62,7 +62,9 @@ end
 
 function CanDoMainFrame_CreateFrames(data)
     for k, v in pairs(data.frames) do
-        ActiveData.frames[k] = {}
+        ActiveData.frames[k] = {
+            frameData = v,
+        }
         CanDoMainFrame_CreateGridFrame(v, ActiveData.frames[k]);
     end
 end
@@ -70,14 +72,14 @@ end
 function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
     local itemCount = table.getn(frame.items);
 
-    local buttonSize = frame.display.arrangement.buttonSize;
+    local buttonSize = frame.display.buttonSize;
 
     local parentFrame = CreateFrame("Frame", "CanDoFrame_" .. frame.name, UIParent);
     parentFrame:SetBackdrop({
         bgFile = "Interface/Tooltips/UI-Tooltip-Background",          
         tile = true
     });
-    parentFrame:SetBackdropColor(0,0,0,.5);
+    parentFrame:SetBackdropColor(0,0,0,frame.display.backgroundAlpha);
 
     if frame.display.arrangement.type == "grid" then
         local rowCount = frame.display.arrangement.rows;
@@ -171,7 +173,7 @@ function CanDoMainFrame_CreateCanDoItem(itemData, frame, activeFrame)
     -- will need to modify to support different sources
     local slot = itemData.source.slot;
 
-    local buttonSize = frame.display.arrangement.buttonSize;
+    local buttonSize = frame.display.buttonSize;
 
     local type, gid = GetActionInfo(slot);
     local name, rank, icon, castTime, minRange, maxRange = "";
@@ -196,7 +198,7 @@ function CanDoMainFrame_CreateCanDoItem(itemData, frame, activeFrame)
         smallFrame.texture:SetSize(buttonSize, buttonSize);
         smallFrame.texture:SetAlpha(1);
         if not IsUsableAction(slot) then
-            smallFrame:SetAlpha(.25);
+            smallFrame:SetAlpha(frame.display.inactiveButtonAlpha);
         end
 
         if not IsPlayerSpell(gid) then
@@ -218,7 +220,7 @@ function CanDoMainFrame_CreateCanDoItem(itemData, frame, activeFrame)
             bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
             tile = true,
         });
-        smallFrame:SetBackdropColor(0,0,0,.5);
+        smallFrame:SetBackdropColor(0,0,0,frame.display.inactiveButtonAlpha);
     end
 
     local chargeText = smallFrame:CreateFontString("CanDoActionButtonText_" .. name, "ARTWORK", "GameFontNormal");

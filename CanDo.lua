@@ -8,11 +8,15 @@ function CanDo_CreateInitialCharacterData()
             {
                 name = "Main Group",
                 display = {
+                    buttonSize = 40,
+                    backgroundAlpha = 0,
+                    backgroundColor = {r = 0, g = 0, b = 0},
+                    activeButtonAlpha = .75,
+                    inactiveButtonAlpha = .15,
                     -- arrangement = {
                     --     type = "grid",
                     --     rows = 0,
                     --     columns = 2,
-                    --     buttonSize = 40,
                     --     padding = 5,
                     -- },
                     arrangement = {
@@ -22,7 +26,6 @@ function CanDo_CreateInitialCharacterData()
                         relativeTo = "height",
                         -- relativeTo = "width",
                         diameter = .25,
-                        buttonSize = 40,
                     },
                     -- values match call to SetPoint on Frame widgets
                     positioning = {
