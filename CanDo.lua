@@ -17,17 +17,21 @@ function CanDo_CreateInitialCharacterData()
                     -- },
                     arrangement = {
                         type = "circle",
-                        diameter = 250,
+                        -- sizing = "absolute",
+                        sizing = "relative",
+                        relativeTo = "height",
+                        -- relativeTo = "width",
+                        diameter = .25,
                         buttonSize = 40,
                     },
                     -- values match call to SetPoint on Frame widgets
                     positioning = {
                         type = "relative",
                         anchor = "CENTER",
-                        relativeAnchor = "BOTTOMLEFT",
+                        relativeAnchor = "CENTER",
                         -- values in percentage of screen
-                        offsetX = .5,
-                        offsetY = .25,
+                        offsetX = 0,
+                        offsetY = -.05,
                     },
                     -- positioning = {
                     --     type = "absolute",

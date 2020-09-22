@@ -72,6 +72,13 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
 
     local buttonSize = frame.display.arrangement.buttonSize;
 
+    local parentFrame = CreateFrame("Frame", "CanDoFrame_" .. frame.name, UIParent);
+    parentFrame:SetBackdrop({
+        bgFile = "Interface/Tooltips/UI-Tooltip-Background",          
+        tile = true
+    });
+    parentFrame:SetBackdropColor(0,0,0,.5);
+
     if frame.display.arrangement.type == "grid" then
         local rowCount = frame.display.arrangement.rows;
         local colCount = frame.display.arrangement.columns;
@@ -91,18 +98,24 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
         activeFrame.rowCount = rowCount;
     elseif frame.display.arrangement.type == "circle" then
         activeFrame.angleStep = 360 / itemCount;
-        activeFrame.radius = frame.display.arrangement.diameter / 2 - buttonSize / 2;
-        activeFrame.totalWidth = frame.display.arrangement.diameter;
+        if frame.display.arrangement.sizing == "absolute" then
+            activeFrame.radius = frame.display.arrangement.diameter / 2 - buttonSize / 2;
+            activeFrame.totalWidth = frame.display.arrangement.diameter;
+        elseif frame.display.arrangement.sizing == "relative" then
+            if frame.display.arrangement.relativeTo == "height" then
+                local absDiameter = parentFrame:GetParent():GetHeight() * frame.display.arrangement.diameter;
+                activeFrame.radius = absDiameter / 2 - buttonSize / 2;
+                activeFrame.totalWidth = absDiameter;
+            elseif frame.display.arrangement.relativeTo == "width" then
+                local absDiameter = parentFrame:GetParent():GetWidth() * frame.display.arrangement.diameter;
+                activeFrame.radius = absDiameter / 2 - buttonSize / 2;
+                activeFrame.totalWidth = absDiameter;
+            end
+        end
+
         activeFrame.totalHeight = activeFrame.totalWidth;
     end
 
-    local parentFrame = CreateFrame("Frame", "CanDoFrame_" .. frame.name, UIParent);
-    parentFrame:SetBackdrop({
-        bgFile = "Interface/Tooltips/UI-Tooltip-Background",          
-        tile = true
-    });
-
-    parentFrame:SetBackdropColor(0,0,0,.5);
     parentFrame:SetSize(activeFrame.totalWidth, activeFrame.totalHeight);
     if frame.display.positioning.type == "absolute" then
         parentFrame:SetPoint(
@@ -148,7 +161,7 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
 
             local y = math.sin(math.rad(angle)) * activeFrame.radius;
             local x = math.cos(math.rad(angle)) * activeFrame.radius;
-            CanDo_Print(x, ", ", y);
+            
             actionButton.frame:SetPoint("CENTER", activeFrame.parentFrame, "CENTER", x, y);
         end
     end
