@@ -2,6 +2,45 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\..\FrameXML\UI.xsd">
     <Script file="CanDoEditorFrame.lua"/>
 
+    <Button name="CanDoEditorFrameListItemButton" virtual="true">
+        <Anchors>
+            <Anchor point="TOPLEFT">
+                <Offset>
+                    <AbsDimension x="8" y="-7"/>
+                </Offset>
+            </Anchor>
+        </Anchors>
+        <Size>
+            <AbsDimension x="175" y="18"/>
+        </Size>
+        <Scripts>
+            <OnLoad>
+                self:GetHighlightTexture():SetVertexColor(.196, .388, .8);
+            </OnLoad>
+            <OnClick>
+                self:GetHighlightTexture():SetVertexColor(1.0, 1.0, 0);
+                self:LockHighlight();
+            </OnClick>
+        </Scripts>
+        <ButtonText name="$parentText" justifyH="LEFT" wordwrap="false" text="Frame One"/>
+        <NormalFont style="GameFontNormal"/>
+        <HighlightFont style="GameFontHighlight"/>
+        <HighlightTexture file="Interface\QuestFrame\UI-QuestLogTitleHighlight" alphaMode="ADD">
+            <Anchors>
+                <Anchor point="TOPLEFT">
+                    <Offset>
+                        <AbsDimension x="0" y="1"/>
+                    </Offset>
+                </Anchor>
+                <Anchor point="BOTTOMRIGHT">
+                    <Offset>
+                        <AbsDimension x="0" y="1"/>
+                    </Offset>
+                </Anchor>
+            </Anchors>
+        </HighlightTexture>
+    </Button>
+
     <Frame name="CanDoEditorFrame" parent="UIParent" topLevel="true" enableMouse="true">
         <Size x="858" y="660"/>
         <Anchors>
@@ -16,7 +55,7 @@
                     <KeyValue key="textString" value="CanDo"/>
                 </KeyValues>
             </Frame>
-            <Frame name="CanDoFramesList" inherits="CanDoSettingsPanelTemplate">
+            <Frame parentKey="framesList" name="$parentFramesList" inherits="CanDoSettingsPanelTemplate">
                 <Size x="175" y="569"/>
                 <Anchors>
                     <Anchor point="TOPLEFT">
@@ -25,68 +64,26 @@
                 </Anchors>
 
                 <Frames>
-
-                    <Button name="CanDoFrameListItemButton">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
-                                <Offset>
-                                    <AbsDimension x="6" y="-1"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Size>
-                            <AbsDimension x="175" y="18"/>
-                        </Size>
-                        <Frames>
-                            <Button name="$parentToggle">
-                                <Size>
-                                    <AbsDimension x="14" y="14"/>
-                                </Size>
-                                <Anchors>
-                                    <Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
-                                        <Offset>
-                                            <AbsDimension x="-6" y="-1"/>
-                                        </Offset>
-                                    </Anchor>
-                                </Anchors>
-                                <NormalTexture name="$parentNormalTexture" file="Interface\Buttons\UI-MinusButton-UP"/>
-                                <PushedTexture name="$parentPushedTexture" file="Interface\Buttons\UI-MinusButton-DOWN"/>
-                                <HighlightTexture name="$parentHighlightTexture" file="Interface\Buttons\UI-PlusButton-Hilight" alphaMode="ADD"/>
-                            </Button>
-                        </Frames>
-                        <Scripts>
-                            <OnLoad>
-	                        self:GetHighlightTexture():SetVertexColor(.196, .388, .8);
-                            </OnLoad>
-                        </Scripts>
-                        <ButtonText name="$parentText" justifyH="LEFT" wordwrap="false" text="Frame One"/>
-                        <NormalFont style="GameFontNormal"/>
-                        <HighlightFont style="GameFontHighlight"/>
-                        <HighlightTexture file="Interface\QuestFrame\UI-QuestLogTitleHighlight" alphaMode="ADD">
-                            <Anchors>
-                                <Anchor point="TOPLEFT">
-                                    <Offset>
-                                        <AbsDimension x="0" y="1"/>
-                                    </Offset>
-                                </Anchor>
-                                <Anchor point="BOTTOMRIGHT">
-                                    <Offset>
-                                        <AbsDimension x="0" y="1"/>
-                                    </Offset>
-                                </Anchor>
-                            </Anchors>
-                        </HighlightTexture>
-                    </Button>
+                    <!-- <Button name="$parentListItemButton" inherits="CanDoEditorFrameListItemButton"/> -->
                 </Frames>
+                <Layers>
+                    <Layer>
+                        <FontString text="Frames" parentKey="Text" inherits="GameFontNormal">
+                            <Anchors>
+                                <Anchor point="BOTTOM" relativePoint="TOP" y="5"/>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
             </Frame>
 
 
             <Frame parentKey="displayOptionsPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate">
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="CanDoFramesList" relativePoint="TOPRIGHT">
+                    <Anchor point="TOPLEFT" relativeTo="$parentFramesList" relativePoint="TOPRIGHT">
                         <Offset x="16" y="0"/>
                     </Anchor>
-                    <Anchor point="BOTTOMLEFT" relativeTo="CanDoFramesList" relativePoint="BOTTOMRIGHT">
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parentFramesList" relativePoint="BOTTOMRIGHT">
                         <Offset x="16" y="1"/>
                     </Anchor>
                     <Anchor point="RIGHT">
@@ -107,10 +104,10 @@
 
             <Frame parentKey="itemsOptionsPanel" name="$parentItemsOptions" inherits="CanDoSettingsPanelTemplate" hidden="true">
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="CanDoFramesList" relativePoint="TOPRIGHT">
+                    <Anchor point="TOPLEFT" relativeTo="$parentFramesList" relativePoint="TOPRIGHT">
                         <Offset x="16" y="0"/>
                     </Anchor>
-                    <Anchor point="BOTTOMLEFT" relativeTo="CanDoFramesList" relativePoint="BOTTOMRIGHT">
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parentFramesList" relativePoint="BOTTOMRIGHT">
                         <Offset x="16" y="1"/>
                     </Anchor>
                     <Anchor point="RIGHT">

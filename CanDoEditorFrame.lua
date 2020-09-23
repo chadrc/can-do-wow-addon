@@ -4,6 +4,16 @@ function CanDoEditorFrame_OnLoad(self, event, ...)
     CanDo_Print("Editor Frame Load");
     CanDo_Print(self.displayToggleTab:Deactivate())
     EditorFrame = self;
+
+    local prevButton = CreateFrame("Button", self.framesList:GetName() .. "FrameButton" .. 0, self.framesList, "CanDoEditorFrameListItemButton");
+    prevButton:SetText("Frame 0");
+    for i=1,10 do
+        local button = CreateFrame("Button", self.framesList:GetName() .. "FrameButton" .. i, self.framesList, "CanDoEditorFrameListItemButton");
+        button:ClearAllPoints(); 
+        button:SetPoint("TOP", prevButton, "BOTTOM", 0, -5);
+        button:SetText("Frame " .. i);
+        prevButton = button;
+    end
 end
 
 function CanDoEditorTabFrame_OnClick(self, button, ...)
