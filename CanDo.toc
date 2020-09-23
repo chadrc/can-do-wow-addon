@@ -5,6 +5,8 @@
 ## SavedVariablesPerCharacter: CanDoCharacterData
 
 CanDo.lua
+CanDoEditorToggleTabs.xml
+CanDoEditorToggleTabs.lua
 CanDoEditorFrame.xml
 CanDoEditorFrame.lua
 CanDoMainFrame.xml
