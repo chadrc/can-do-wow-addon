@@ -1,168 +1,169 @@
-<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\..\FrameXML\UI.xsd">
-<Script file="CanDoEditorFrame.lua"/>
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\..\FrameXML\UI.xsd">
+    <Script file="CanDoEditorFrame.lua"/>
 
-<Frame name="CanDoEditorFrame" parent="UIParent" topLevel="true"> 
-    <Size x="858" y="660"/>
-    <Anchors>
-        <Anchor point="CENTER"/>
-    </Anchors>
-    
-    <Frames>
-        <Frame parentKey="Border" inherits="DialogBorderTemplate"/>
-        <Frame parentKey="Header" inherits="DialogHeaderTemplate">
-            <KeyValues>
-                <KeyValue key="headerTextPadding" value="100" type="number"/>
-                <KeyValue key="textString" value="CanDo"/>
-            </KeyValues>
-        </Frame>
-        <Frame name="CanDoFramesList" inherits="CanDoSettingsPanelTemplate">
-            <Size x="175" y="569"/>
-            <Anchors>
-                <Anchor point="TOPLEFT">
-                    <Offset x="20" y="-40"/>
-                </Anchor>
-            </Anchors>
+    <Frame name="CanDoEditorFrame" parent="UIParent" topLevel="true">
+        <Size x="858" y="660"/>
+        <Anchors>
+            <Anchor point="CENTER"/>
+        </Anchors>
 
-            <Frames>
-                
-                <Button name="CanDoFrameListItemButton">
-                    <Anchors>
-                        <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
-                            <Offset>
-                                <AbsDimension x="6" y="-1"/>
-                            </Offset>
-                        </Anchor>
-                    </Anchors>
-                    <Size>
-                        <AbsDimension x="175" y="18"/>
-                    </Size>
-                    <Frames>
-                        <Button name="$parentToggle">
-                            <Size>
-                                <AbsDimension x="14" y="14"/>
-                            </Size>
+        <Frames>
+            <Frame parentKey="Border" inherits="DialogBorderTemplate"/>
+            <Frame parentKey="Header" inherits="DialogHeaderTemplate">
+                <KeyValues>
+                    <KeyValue key="headerTextPadding" value="100" type="number"/>
+                    <KeyValue key="textString" value="CanDo"/>
+                </KeyValues>
+            </Frame>
+            <Frame name="CanDoFramesList" inherits="CanDoSettingsPanelTemplate">
+                <Size x="175" y="569"/>
+                <Anchors>
+                    <Anchor point="TOPLEFT">
+                        <Offset x="20" y="-40"/>
+                    </Anchor>
+                </Anchors>
+
+                <Frames>
+
+                    <Button name="CanDoFrameListItemButton">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                                <Offset>
+                                    <AbsDimension x="6" y="-1"/>
+                                </Offset>
+                            </Anchor>
+                        </Anchors>
+                        <Size>
+                            <AbsDimension x="175" y="18"/>
+                        </Size>
+                        <Frames>
+                            <Button name="$parentToggle">
+                                <Size>
+                                    <AbsDimension x="14" y="14"/>
+                                </Size>
+                                <Anchors>
+                                    <Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+                                        <Offset>
+                                            <AbsDimension x="-6" y="-1"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                                <NormalTexture name="$parentNormalTexture" file="Interface\Buttons\UI-MinusButton-UP"/>
+                                <PushedTexture name="$parentPushedTexture" file="Interface\Buttons\UI-MinusButton-DOWN"/>
+                                <HighlightTexture name="$parentHighlightTexture" file="Interface\Buttons\UI-PlusButton-Hilight" alphaMode="ADD"/>
+                            </Button>
+                        </Frames>
+                        <Scripts>
+                            <OnLoad>
+	                        self:GetHighlightTexture():SetVertexColor(.196, .388, .8);
+                            </OnLoad>
+                        </Scripts>
+                        <ButtonText name="$parentText" justifyH="LEFT" wordwrap="false" text="Frame One"/>
+                        <NormalFont style="GameFontNormal"/>
+                        <HighlightFont style="GameFontHighlight"/>
+                        <HighlightTexture file="Interface\QuestFrame\UI-QuestLogTitleHighlight" alphaMode="ADD">
                             <Anchors>
-                                <Anchor point="TOPRIGHT" relativeTo="$parent" relativePoint="TOPRIGHT">
+                                <Anchor point="TOPLEFT">
                                     <Offset>
-                                        <AbsDimension x="-6" y="-1"/>
+                                        <AbsDimension x="0" y="1"/>
+                                    </Offset>
+                                </Anchor>
+                                <Anchor point="BOTTOMRIGHT">
+                                    <Offset>
+                                        <AbsDimension x="0" y="1"/>
                                     </Offset>
                                 </Anchor>
                             </Anchors>
-                            <NormalTexture name="$parentNormalTexture" file="Interface\Buttons\UI-MinusButton-UP"/>
-                            <PushedTexture name="$parentPushedTexture" file="Interface\Buttons\UI-MinusButton-DOWN"/>
-                            <HighlightTexture name="$parentHighlightTexture" file="Interface\Buttons\UI-PlusButton-Hilight" alphaMode="ADD"/>
-                        </Button>
-                    </Frames>
-                    <Scripts>
-                        <OnLoad>
-	                        self:GetHighlightTexture():SetVertexColor(.196, .388, .8);
-                        </OnLoad>
-                    </Scripts>
-                    <ButtonText name="$parentText" justifyH="LEFT" wordwrap="false" text="Frame One"/>
-                    <NormalFont style="GameFontNormal"/>
-                    <HighlightFont style="GameFontHighlight"/>
-                    <HighlightTexture file="Interface\QuestFrame\UI-QuestLogTitleHighlight" alphaMode="ADD">
-                        <Anchors>
-                            <Anchor point="TOPLEFT">
-                                <Offset>
-                                    <AbsDimension x="0" y="1"/>
-                                </Offset>
-                            </Anchor>
-                            <Anchor point="BOTTOMRIGHT">
-                                <Offset>
-                                    <AbsDimension x="0" y="1"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                    </HighlightTexture>
-                </Button>
-            </Frames>
-        </Frame>
+                        </HighlightTexture>
+                    </Button>
+                </Frames>
+            </Frame>
 
 
-        <Frame parentKey="displayOptionsPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate">
-            <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="CanDoFramesList" relativePoint="TOPRIGHT">
-                    <Offset x="16" y="0"/>
-                </Anchor>
-                <Anchor point="BOTTOMLEFT" relativeTo="CanDoFramesList" relativePoint="BOTTOMRIGHT">
-                    <Offset x="16" y="1"/>
-                </Anchor>
-                <Anchor point="RIGHT">
-                    <Offset x="-22" y="0"/>
-                </Anchor>
-            </Anchors>
+            <Frame parentKey="displayOptionsPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="CanDoFramesList" relativePoint="TOPRIGHT">
+                        <Offset x="16" y="0"/>
+                    </Anchor>
+                    <Anchor point="BOTTOMLEFT" relativeTo="CanDoFramesList" relativePoint="BOTTOMRIGHT">
+                        <Offset x="16" y="1"/>
+                    </Anchor>
+                    <Anchor point="RIGHT">
+                        <Offset x="-22" y="0"/>
+                    </Anchor>
+                </Anchors>
 
-            <Layers>
-                <Layer>
-                    <FontString text="Display" parentKey="Text" inherits="GameFontNormal">
-                        <Anchors>
-                            <Anchor point="TOP" y="-13"/>
-                        </Anchors>
-                    </FontString>
-                </Layer>
-            </Layers>
-        </Frame>
+                <Layers>
+                    <Layer>
+                        <FontString text="Display" parentKey="Text" inherits="GameFontNormal">
+                            <Anchors>
+                                <Anchor point="TOP" y="-13"/>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Frame>
 
-        <Frame parentKey="itemsOptionsPanel" name="$parentItemsOptions" inherits="CanDoSettingsPanelTemplate" hidden="true">
-            <Anchors>
-                <Anchor point="TOPLEFT" relativeTo="CanDoFramesList" relativePoint="TOPRIGHT">
-                    <Offset x="16" y="0"/>
-                </Anchor>
-                <Anchor point="BOTTOMLEFT" relativeTo="CanDoFramesList" relativePoint="BOTTOMRIGHT">
-                    <Offset x="16" y="1"/>
-                </Anchor>
-                <Anchor point="RIGHT">
-                    <Offset x="-22" y="0"/>
-                </Anchor>
-            </Anchors>
+            <Frame parentKey="itemsOptionsPanel" name="$parentItemsOptions" inherits="CanDoSettingsPanelTemplate" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="CanDoFramesList" relativePoint="TOPRIGHT">
+                        <Offset x="16" y="0"/>
+                    </Anchor>
+                    <Anchor point="BOTTOMLEFT" relativeTo="CanDoFramesList" relativePoint="BOTTOMRIGHT">
+                        <Offset x="16" y="1"/>
+                    </Anchor>
+                    <Anchor point="RIGHT">
+                        <Offset x="-22" y="0"/>
+                    </Anchor>
+                </Anchors>
 
-            <Layers>
-                <Layer>
-                    <FontString text="Items" parentKey="Text" inherits="GameFontNormal">
-                        <Anchors>
-                            <Anchor point="TOP" y="-13"/>
-                        </Anchors>
-                    </FontString>
-                </Layer>
-            </Layers>
-        </Frame>
-        
-        <Frame parentKey="itemsToggleTab" name="$parentItemsToggleTab" inherits="CanDoFramesToggleTabButtonTemplate">
-            <Attributes>
-                <Attribute name="text" value="Items"/>
-                <Attribute name="onclick" value="CanDoEditorOnItemsTabClicked"/>
-            </Attributes>
-            <Anchors>
-                <Anchor point="RIGHT" relativeTo="$parentDisplayOptions">
-                    <Offset x="-10" y="-5"/>
-                </Anchor>
-                <Anchor point="BOTTOM" relativeTo="$parentDisplayOptions" relativePoint="TOP"/>
-            </Anchors>
-            <Size>
-                <AbsDimension x="115" y="24"/>
-            </Size>
-        </Frame>
-        <Frame parentKey="displayToggleTab" name="$parentDisplayToggleTab" inherits="CanDoFramesToggleTabButtonTemplate">
-            <Attributes>
-                <Attribute name="text" value="Display"/>
-                <Attribute name="onclick" value="CanDoEditorOnDisplayTabClicked"/>
-            </Attributes>
-            <Anchors>
-                <Anchor point="RIGHT" relativeTo="$parentItemsToggleTab" relativePoint="LEFT">
-                    <!-- <Offset x="20" y="-40"/> -->
-                </Anchor>
-            </Anchors>
-            <Size>
-                <AbsDimension x="115" y="24"/>
-            </Size>
-        </Frame>
-    </Frames>
-    <Scripts> 
-        <OnLoad function="CanDoEditorFrame_OnLoad"></OnLoad>
-        <!-- <OnEvent function="CanDoEditorFrame_OnEvent"></OnEvent> -->
-    </Scripts>
-</Frame>
+                <Layers>
+                    <Layer>
+                        <FontString text="Items" parentKey="Text" inherits="GameFontNormal">
+                            <Anchors>
+                                <Anchor point="TOP" y="-13"/>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Frame>
+
+            <Frame parentKey="itemsToggleTab" name="$parentItemsToggleTab" inherits="CanDoFramesToggleTabButtonTemplate">
+                <Attributes>
+                    <Attribute name="text" value="Items"/>
+                    <Attribute name="onclick" value="CanDoEditorOnItemsTabClicked"/>
+                </Attributes>
+                <Anchors>
+                    <Anchor point="RIGHT" relativeTo="$parentDisplayOptions">
+                        <!-- <Offset x="-10" y="-5"/> -->
+                    </Anchor>
+                    <Anchor point="BOTTOM" relativeTo="$parentDisplayOptions" relativePoint="TOP"/>
+                </Anchors>
+                <Size>
+                    <AbsDimension x="100" y="24"/>
+                </Size>
+            </Frame>
+            <Frame parentKey="displayToggleTab" name="$parentDisplayToggleTab" inherits="CanDoFramesToggleTabButtonTemplate">
+                <Attributes>
+                    <Attribute name="text" value="Display"/>
+                    <Attribute name="onclick" value="CanDoEditorOnDisplayTabClicked"/>
+                </Attributes>
+                <Anchors>
+                    <Anchor point="RIGHT" relativeTo="$parentItemsToggleTab" relativePoint="LEFT">
+                        <Offset x="18" y="0"/>
+                    </Anchor>
+                </Anchors>
+                <Size>
+                    <AbsDimension x="100" y="24"/>
+                </Size>
+            </Frame>
+        </Frames>
+        <Scripts>
+            <OnLoad function="CanDoEditorFrame_OnLoad"></OnLoad>
+            <!-- <OnEvent function="CanDoEditorFrame_OnEvent"></OnEvent> -->
+        </Scripts>
+    </Frame>
 
 
 </Ui>
