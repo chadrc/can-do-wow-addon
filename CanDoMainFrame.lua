@@ -2,8 +2,17 @@ local CanDo_CreateInitialCharacterData = CanDo_CreateInitialCharacterData;
 local CanDo_Print = CanDo_Print;
 
 local ActiveData = {
+    editorFrame = nil,
     frames = {}
 }
+
+SLASH_CANDO1 = "/cando";
+
+print("parsed");
+
+function CanDo_SlashHandler() 
+    CanDoEditor_Open(ActiveData.editorFrame);
+end
 
 function CanDoMainFrame_OnLoad(self, event, ...)
     CanDo_Print("CanDo loaded");
@@ -12,6 +21,11 @@ function CanDoMainFrame_OnLoad(self, event, ...)
     -- self:RegisterEvent("PLAYER_LOGOUT");
     -- self:RegisterEvent("VARIABLES_LOADED");
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
+
+    ActiveData.editorFrame = CanDoEditorFrame;
+    CanDoEditor_Init(ActiveData.editorFrame);
+
+    SlashCmdList["CANDO"] = CanDo_SlashHandler;
 end
 
 function CanDoMainFrame_OnEvent(self, event, ...)
@@ -254,3 +268,4 @@ function CanDoMainFrame_CreateCanDoItem(itemData, frame, activeFrame)
         maxCharges = maxCharges,
     };
 end
+

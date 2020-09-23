@@ -41,7 +41,7 @@
         </HighlightTexture>
     </Button>
 
-    <Frame name="CanDoEditorFrame" parent="UIParent" topLevel="true" enableMouse="true">
+    <Frame name="CanDoEditorFrame" parent="UIParent" topLevel="true" enableMouse="true" hidden="true">
         <Size x="858" y="660"/>
         <Anchors>
             <Anchor point="CENTER"/>
@@ -62,10 +62,6 @@
                         <Offset x="20" y="-40"/>
                     </Anchor>
                 </Anchors>
-
-                <Frames>
-                    <!-- <Button name="$parentListItemButton" inherits="CanDoEditorFrameListItemButton"/> -->
-                </Frames>
                 <Layers>
                     <Layer>
                         <FontString text="Frames" parentKey="Text" inherits="GameFontNormal">
@@ -129,12 +125,9 @@
             <Frame parentKey="itemsToggleTab" name="$parentItemsToggleTab" inherits="CanDoFramesToggleTabButtonTemplate">
                 <Attributes>
                     <Attribute name="text" value="Items"/>
-                    <Attribute name="onclick" value="CanDoEditorOnItemsTabClicked"/>
                 </Attributes>
                 <Anchors>
-                    <Anchor point="RIGHT" relativeTo="$parentDisplayOptions">
-                        <!-- <Offset x="-10" y="-5"/> -->
-                    </Anchor>
+                    <Anchor point="RIGHT" relativeTo="$parentDisplayOptions"/>
                     <Anchor point="BOTTOM" relativeTo="$parentDisplayOptions" relativePoint="TOP"/>
                 </Anchors>
                 <Size>
@@ -144,7 +137,6 @@
             <Frame parentKey="displayToggleTab" name="$parentDisplayToggleTab" inherits="CanDoFramesToggleTabButtonTemplate">
                 <Attributes>
                     <Attribute name="text" value="Display"/>
-                    <Attribute name="onclick" value="CanDoEditorOnDisplayTabClicked"/>
                 </Attributes>
                 <Anchors>
                     <Anchor point="RIGHT" relativeTo="$parentItemsToggleTab" relativePoint="LEFT">
@@ -156,11 +148,5 @@
                 </Size>
             </Frame>
         </Frames>
-        <Scripts>
-            <OnLoad function="CanDoEditorFrame_OnLoad"></OnLoad>
-            <!-- <OnEvent function="CanDoEditorFrame_OnEvent"></OnEvent> -->
-        </Scripts>
     </Frame>
-
-
 </Ui>

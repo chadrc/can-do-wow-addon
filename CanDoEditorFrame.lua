@@ -1,39 +1,39 @@
-local EditorFrame
 
-function CanDoEditorFrame_OnLoad(self, event, ...)
-    CanDo_Print("Editor Frame Load");
-    CanDo_Print(self.displayToggleTab:Deactivate())
-    EditorFrame = self;
+function CanDoEditor_Init(editor)
+    CanDo_Print(editor.displayToggleTab:Deactivate())
 
-    local prevButton = CreateFrame("Button", self.framesList:GetName() .. "FrameButton" .. 0, self.framesList, "CanDoEditorFrameListItemButton");
+    editor.itemsToggleTab:SetOnActivate(function ()
+        CanDoEditorOnItemsTabClicked(editor);
+    end);
+    editor.displayToggleTab:SetOnActivate(function ()
+        CanDoEditorOnDisplayTabClicked(editor);
+    end);
+end
+
+function CanDoEditor_Open(editor)
+    local prevButton = CreateFrame("Button", editor.framesList:GetName() .. "FrameButton" .. 0, editor.framesList, "CanDoEditorFrameListItemButton");
     prevButton:SetText("Frame 0");
     for i=1,10 do
-        local button = CreateFrame("Button", self.framesList:GetName() .. "FrameButton" .. i, self.framesList, "CanDoEditorFrameListItemButton");
+        local button = CreateFrame("Button", editor.framesList:GetName() .. "FrameButton" .. i, editor.framesList, "CanDoEditorFrameListItemButton");
         button:ClearAllPoints(); 
         button:SetPoint("TOP", prevButton, "BOTTOM", 0, -5);
         button:SetText("Frame " .. i);
         prevButton = button;
     end
+
+    editor:Show();
 end
 
-function CanDoEditorTabFrame_OnClick(self, button, ...)
-    print("Tab click: ", button);
+function CanDoEditorOnDisplayTabClicked(editor)
+    editor.itemsOptionsPanel:Hide();
+    editor.itemsToggleTab:Activate();
 
-    print("text: ", self:GetAttribute("text"));
-    print("onclick: ", self:GetAttribute("onclick"));
-    _G[self:GetAttribute("onclick")]()
+    editor.displayOptionsPanel:Show();
 end
 
-function CanDoEditorOnDisplayTabClicked(self)
-    EditorFrame.itemsOptionsPanel:Hide();
-    EditorFrame.itemsToggleTab:Activate();
+function CanDoEditorOnItemsTabClicked(editor)
+    editor.itemsOptionsPanel:Show();
 
-    EditorFrame.displayOptionsPanel:Show();
-end
-
-function CanDoEditorOnItemsTabClicked(self)
-    EditorFrame.itemsOptionsPanel:Show();
-
-    EditorFrame.displayOptionsPanel:Hide();
-    EditorFrame.displayToggleTab:Activate();
+    editor.displayOptionsPanel:Hide();
+    editor.displayToggleTab:Activate();
 end
