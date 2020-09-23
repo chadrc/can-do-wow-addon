@@ -8,10 +8,8 @@ local ActiveData = {
 
 SLASH_CANDO1 = "/cando";
 
-print("parsed");
-
 function CanDo_SlashHandler() 
-    CanDoEditor_Open(ActiveData.editorFrame);
+    ActiveData.editorFrame:Open(CanDoCharacterData.frames);
 end
 
 function CanDoMainFrame_OnLoad(self, event, ...)
@@ -47,8 +45,6 @@ function CanDoMainFrame_OnEvent(self, event, ...)
     elseif event == "PLAYER_ENTERING_WORLD" then
         -- Create bars
         CanDoMainFrame_CreateFrames(CanDoCharacterData);
-
-        CanDo_Print(TOOLTIP_UPDATE_TIME);
     end
 end
 

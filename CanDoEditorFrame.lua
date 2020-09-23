@@ -8,20 +8,24 @@ function CanDoEditor_Init(editor)
     editor.displayToggleTab:SetOnActivate(function ()
         CanDoEditorOnDisplayTabClicked(editor);
     end);
-end
 
-function CanDoEditor_Open(editor)
-    local prevButton = CreateFrame("Button", editor.framesList:GetName() .. "FrameButton" .. 0, editor.framesList, "CanDoEditorFrameListItemButton");
-    prevButton:SetText("Frame 0");
-    for i=1,10 do
-        local button = CreateFrame("Button", editor.framesList:GetName() .. "FrameButton" .. i, editor.framesList, "CanDoEditorFrameListItemButton");
-        button:ClearAllPoints(); 
-        button:SetPoint("TOP", prevButton, "BOTTOM", 0, -5);
-        button:SetText("Frame " .. i);
-        prevButton = button;
+    function editor:Open(data)
+        if table.getn(data) > 0 then 
+            local prevButton = CreateFrame("Button", editor.framesList:GetName() .. "FrameButton" .. 1, editor.framesList, "CanDoEditorFrameListItemButton");
+            
+            prevButton:SetText(data[1].name);
+            
+            for i=2,table.getn(data) do
+                local button = CreateFrame("Button", editor.framesList:GetName() .. "FrameButton" .. i, editor.framesList, "CanDoEditorFrameListItemButton");
+                button:ClearAllPoints(); 
+                button:SetPoint("TOP", prevButton, "BOTTOM", 0, -5);
+                button:SetText(data[i].name);
+                prevButton = button;
+            end
+        end
+
+        editor:Show();
     end
-
-    editor:Show();
 end
 
 function CanDoEditorOnDisplayTabClicked(editor)
