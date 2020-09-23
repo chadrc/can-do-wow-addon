@@ -12,15 +12,30 @@ function CanDoEditor_Init(editor)
 
     function editor:Open(data)
         if table.getn(data) > 0 then 
-            local prevButton = CreateFrame("Button", editor.framesList:GetName() .. "FrameButton" .. 1, editor.framesList, "CanDoEditorFrameListItemButton");
-            
-            prevButton:SetText(data[1].name);
-            
+
+            local function CreateButton(d) 
+                local button = CreateFrame(
+                    "Button", 
+                    editor.framesList:GetName() .. "FrameButton" .. d.name, editor.framesList, 
+                    "CanDoEditorFrameListItemButton"
+                );
+                button:SetText(d.name);
+                button.data = d;
+	            button:RegisterForClicks("LeftButtonUp", "RightButtonUp");
+                button:SetScript("OnClick", function ()
+                    button:GetHighlightTexture():SetVertexColor(1.0, 1.0, 0);
+                    button:LockHighlight();
+                    CanDoEditorUpdateDisplayPanel(editor, button.data);
+                end)
+                return button;
+            end
+
+            local prevButton = CreateButton(data[1]);
+
             for i=2,table.getn(data) do
-                local button = CreateFrame("Button", editor.framesList:GetName() .. "FrameButton" .. i, editor.framesList, "CanDoEditorFrameListItemButton");
+                local button = CreateButton(data[i]);
                 button:ClearAllPoints(); 
                 button:SetPoint("TOP", prevButton, "BOTTOM", 0, -5);
-                button:SetText(data[i].name);
                 prevButton = button;
             end
         end
@@ -41,4 +56,10 @@ function CanDoEditorOnItemsTabClicked(editor)
 
     editor.displayOptionsPanel:Hide();
     editor.displayToggleTab:Activate();
+end
+
+function CanDoEditorUpdateDisplayPanel(editor, data)
+    local display = editor.displayOptionsPanel;
+
+    display.title:SetText(data.name);
 end
