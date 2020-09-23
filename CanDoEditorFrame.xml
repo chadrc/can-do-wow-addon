@@ -2,7 +2,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\..\FrameXML\UI.xsd">
     <Script file="CanDoEditorFrame.lua"/>
 
-    <Frame name="CanDoEditorFrame" parent="UIParent" topLevel="true">
+    <Frame name="CanDoEditorFrame" parent="UIParent" topLevel="true" enableMouse="true">
         <Size x="858" y="660"/>
         <Anchors>
             <Anchor point="CENTER"/>
