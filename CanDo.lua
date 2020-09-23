@@ -11,7 +11,7 @@ function CanDo_CreateInitialCharacterData()
                     buttonSize = 40,
                     backgroundAlpha = 0,
                     backgroundColor = {r = 0, g = 0, b = 0},
-                    activeButtonAlpha = .75,
+                    activeButtonAlpha = .5,
                     inactiveButtonAlpha = .15,
                     -- arrangement = {
                     --     type = "grid",

@@ -33,6 +33,8 @@ function CanDoMainFrame_OnEvent(self, event, ...)
     elseif event == "PLAYER_ENTERING_WORLD" then
         -- Create bars
         CanDoMainFrame_CreateFrames(CanDoCharacterData);
+
+        CanDo_Print(TOOLTIP_UPDATE_TIME);
     end
 end
 

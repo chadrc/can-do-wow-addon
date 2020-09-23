@@ -5,5 +5,7 @@
 ## SavedVariablesPerCharacter: CanDoCharacterData
 
 CanDo.lua
+CanDoEditorFrame.xml
+CanDoEditorFrame.lua
 CanDoMainFrame.xml
 CanDoMainFrame.lua
