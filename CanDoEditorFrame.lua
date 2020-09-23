@@ -1,8 +1,9 @@
-
+local EditorFrame
 
 function CanDoEditorFrame_OnLoad(self, event, ...)
     CanDo_Print("Editor Frame Load");
-    CanDo_Print(self.itemsToggleTab:Deactivate())
+    CanDo_Print(self.displayToggleTab:Deactivate())
+    EditorFrame = self;
 end
 
 function CanDoEditorTabFrame_OnClick(self, button, ...)
@@ -14,15 +15,21 @@ function CanDoEditorTabFrame_OnClick(self, button, ...)
 end
 
 function CanDoEditorOnDisplayTabClicked(self)
-    print("display tab clicked")
+    EditorFrame.itemsOptionsPanel:Hide();
+    EditorFrame.itemsToggleTab:Activate();
+
+    EditorFrame.displayOptionsPanel:Show();
 end
 
 function CanDoEditorOnItemsTabClicked(self)
-    print("items tab clicked")
+    EditorFrame.itemsOptionsPanel:Show();
+
+    EditorFrame.displayOptionsPanel:Hide();
+    EditorFrame.displayToggleTab:Activate();
 end
 
 function CanDoEditorToggleTab_OnLoad(self)
-    self.inactive:Disable();
+    self.active:Disable();
     if self:GetAttribute("onclick") and _G[self:GetAttribute("onclick")] then
         self.callback = _G[self:GetAttribute("onclick")];
     end
@@ -34,10 +41,9 @@ function CanDoEditorToggleTab_OnLoad(self)
     -- self.refs.active:SetWidth(textWidth);
     -- self.refs.inactive:SetWidth(textWidth);
 
-    self.active:SetScript("OnClick", function ()
+    self.inactive:SetScript("OnClick", function ()
         CanDo_Print("click");
-        self.inactive:Show();
-        self.active:Hide();
+        self:Deactivate();
 
         if self.callback then
             self.callback()
@@ -45,12 +51,12 @@ function CanDoEditorToggleTab_OnLoad(self)
     end)
 
     function self:Activate() 
-        self.inactive:Hide();
-        self.active:Show();
+        self.inactive:Show();
+        self.active:Hide();
     end    
     
     function self:Deactivate() 
-        self.inactive:Show();
-        self.active:Hide();
+        self.inactive:Hide();
+        self.active:Show();
     end
 end

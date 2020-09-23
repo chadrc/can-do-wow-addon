@@ -124,7 +124,7 @@
         <Attribute name="onclick" value="CanDoEditorOnDisplayTabClicked"/>
     </Attributes> -->
     <Frames>
-        <Button parentKey="active" name="$parentActiveTabButton" inherits="CanDoFramesActiveTabButtonTemplate">
+        <Button parentKey="active" name="$parentActiveTabButton" inherits="CanDoFramesActiveTabButtonTemplate" hidden="true">
             <Anchors>
                 <Anchor point="BOTTOM"/>
             </Anchors>
@@ -132,7 +132,7 @@
                 <AbsDimension x="115" y="24"/>
             </Size>
         </Button>
-        <Button parentKey="inactive" name="$parentInactiveTabButton" enabled="false" inherits="CanDoFramesInactiveTabButtonTemplate" hidden="true">
+        <Button parentKey="inactive" name="$parentInactiveTabButton" inherits="CanDoFramesInactiveTabButtonTemplate">
             <Anchors>
                 <Anchor point="BOTTOM"/>
             </Anchors>
@@ -226,7 +226,7 @@
         </Frame>
 
 
-        <Frame name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate">
+        <Frame parentKey="displayOptionsPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate">
             <Anchors>
                 <Anchor point="TOPLEFT" relativeTo="CanDoFramesList" relativePoint="TOPRIGHT">
                     <Offset x="16" y="0"/>
@@ -238,12 +238,46 @@
                     <Offset x="-22" y="0"/>
                 </Anchor>
             </Anchors>
+
+            <Layers>
+                <Layer>
+                    <FontString text="Display" parentKey="Text" inherits="GameFontNormal">
+                        <Anchors>
+                            <Anchor point="TOP" y="-13"/>
+                        </Anchors>
+                    </FontString>
+                </Layer>
+            </Layers>
+        </Frame>
+
+        <Frame parentKey="itemsOptionsPanel" name="$parentItemsOptions" inherits="CanDoSettingsPanelTemplate" hidden="true">
+            <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="CanDoFramesList" relativePoint="TOPRIGHT">
+                    <Offset x="16" y="0"/>
+                </Anchor>
+                <Anchor point="BOTTOMLEFT" relativeTo="CanDoFramesList" relativePoint="BOTTOMRIGHT">
+                    <Offset x="16" y="1"/>
+                </Anchor>
+                <Anchor point="RIGHT">
+                    <Offset x="-22" y="0"/>
+                </Anchor>
+            </Anchors>
+
+            <Layers>
+                <Layer>
+                    <FontString text="Items" parentKey="Text" inherits="GameFontNormal">
+                        <Anchors>
+                            <Anchor point="TOP" y="-13"/>
+                        </Anchors>
+                    </FontString>
+                </Layer>
+            </Layers>
         </Frame>
         
         <Frame parentKey="itemsToggleTab" name="$parentItemsToggleTab" inherits="CanDoFramesToggleTabButtonTemplate">
             <Attributes>
                 <Attribute name="text" value="Items"/>
-                <Attribute name="onclick" value="CanDoEditorOnDisplayTabClicked"/>
+                <Attribute name="onclick" value="CanDoEditorOnItemsTabClicked"/>
             </Attributes>
             <Anchors>
                 <Anchor point="RIGHT" relativeTo="$parentDisplayOptions">
@@ -255,7 +289,7 @@
                 <AbsDimension x="115" y="24"/>
             </Size>
         </Frame>
-        <Frame name="$parentDisplayToggleTab" inherits="CanDoFramesToggleTabButtonTemplate">
+        <Frame parentKey="displayToggleTab" name="$parentDisplayToggleTab" inherits="CanDoFramesToggleTabButtonTemplate">
             <Attributes>
                 <Attribute name="text" value="Display"/>
                 <Attribute name="onclick" value="CanDoEditorOnDisplayTabClicked"/>
