@@ -124,10 +124,7 @@
         <Attribute name="onclick" value="CanDoEditorOnDisplayTabClicked"/>
     </Attributes> -->
     <Frames>
-        <Button name="$parentActiveTabButton" inherits="CanDoFramesActiveTabButtonTemplate">
-            <Attributes>
-                <Attribute name="ref" value="active"/>
-            </Attributes>
+        <Button parentKey="active" name="$parentActiveTabButton" inherits="CanDoFramesActiveTabButtonTemplate">
             <Anchors>
                 <Anchor point="BOTTOM"/>
             </Anchors>
@@ -135,10 +132,7 @@
                 <AbsDimension x="115" y="24"/>
             </Size>
         </Button>
-        <Button name="$parentInactiveTabButton" enabled="false" inherits="CanDoFramesInactiveTabButtonTemplate" hidden="true">
-            <Attributes>
-                <Attribute name="ref" value="inactive"/>
-            </Attributes>
+        <Button parentKey="inactive" name="$parentInactiveTabButton" enabled="false" inherits="CanDoFramesInactiveTabButtonTemplate" hidden="true">
             <Anchors>
                 <Anchor point="BOTTOM"/>
             </Anchors>

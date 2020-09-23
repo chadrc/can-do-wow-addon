@@ -22,23 +22,22 @@ function CanDoEditorOnItemsTabClicked(self)
 end
 
 function CanDoEditorToggleTab_OnLoad(self)
-    MakeRefs(self);
-    self.refs.inactive:Disable();
+    self.inactive:Disable();
     if self:GetAttribute("onclick") and _G[self:GetAttribute("onclick")] then
         self.callback = _G[self:GetAttribute("onclick")];
     end
 
-    self.refs.active:SetText(self:GetAttribute("text"));
-    self.refs.inactive:SetText(self:GetAttribute("text"));
+    self.active:SetText(self:GetAttribute("text"));
+    self.inactive:SetText(self:GetAttribute("text"));
 
     -- local textWidth = self.refs.active:GetTextWidth();
     -- self.refs.active:SetWidth(textWidth);
     -- self.refs.inactive:SetWidth(textWidth);
 
-    self.refs["active"]:SetScript("OnClick", function ()
+    self.active:SetScript("OnClick", function ()
         CanDo_Print("click");
-        self.refs.inactive:Show();
-        self.refs.active:Hide();
+        self.inactive:Show();
+        self.active:Hide();
 
         if self.callback then
             self.callback()
@@ -46,20 +45,12 @@ function CanDoEditorToggleTab_OnLoad(self)
     end)
 
     function self:Activate() 
-        self.refs.inactive:Hide();
-        self.refs.active:Show();
+        self.inactive:Hide();
+        self.active:Show();
     end    
     
     function self:Deactivate() 
-        self.refs.inactive:Show();
-        self.refs.active:Hide();
-    end
-end
-
-function MakeRefs(frame)
-    frame.refs = {};
-    for k, v in pairs({frame:GetChildren()}) do
-        frame.refs[v:GetAttribute("ref")] = v;
-        MakeRefs(v);
+        self.inactive:Show();
+        self.active:Hide();
     end
 end
