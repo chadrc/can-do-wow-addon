@@ -1,6 +1,7 @@
 
 function CanDoEditor_Init(editor)
     CanDo_Print(editor.displayToggleTab:Deactivate())
+    tinsert(UISpecialFrames, editor:GetName());
 
     editor.itemsToggleTab:SetOnActivate(function ()
         CanDoEditorOnItemsTabClicked(editor);
