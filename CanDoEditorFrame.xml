@@ -68,6 +68,12 @@
                     </Layer>
                 </Layers>
             </Frame>
+            <Button name="$parentDeleteFrameButton" parentKey="deleteButton" inherits="UIPanelButtonTemplate" text="Delete">
+                <Anchors>
+                    <Anchor point="TOP" relativeTo="$parentFramesList" relativePoint="BOTTOM" y="-5"/>
+                </Anchors>
+                <Size x="70" y="24"/>
+            </Button>
 
             <Frame parentKey="createPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate" hidden="true">
                 <Anchors>

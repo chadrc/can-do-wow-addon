@@ -1,9 +1,21 @@
 
 function CanDoEditor_Init(editor)
+    tinsert(UISpecialFrames, editor:GetName());
     editor.currentPanel = editor.displayOptionsPanel;
     editor.createPanel.title:SetFont(editor.createPanel.title:GetFont(), 18);
-    CanDo_Print(editor.displayToggleTab:Deactivate())
-    tinsert(UISpecialFrames, editor:GetName());
+    editor.displayToggleTab:Deactivate()
+    editor.deleteButton:Disable();
+
+    editor.deleteButton:SetScript("OnClick", function ()
+        CanDo_Print("deleting: ", editor.currentButton.dataIndex);
+
+        local newData = CanDoMainFrame_RemoveFrame(editor.currentButton.dataIndex);
+        editor:UpdateList(newData);
+
+        editor.currentButton:UnlockHighlight();
+        editor.currentButton = nil;
+        editor.deleteButton:Disable();
+    end)
 
     editor.itemsToggleTab:SetOnActivate(function ()
         CanDoEditorOnItemsTabClicked(editor);
@@ -13,7 +25,6 @@ function CanDoEditor_Init(editor)
     end);
 
     local onButtonClick = function (self)
-        CanDo_Print("button");
         self:GetHighlightTexture():SetVertexColor(1.0, 1.0, 0);
         self:LockHighlight();
         CanDoEditorUpdateDisplayPanel(editor, self.data);
@@ -25,6 +36,7 @@ function CanDoEditor_Init(editor)
             editor.currentButton:UnlockHighlight();
         end
         editor.currentButton = self;
+        editor.deleteButton:Enable();
     end
     
     local createButton = function (i)
@@ -57,11 +69,12 @@ function CanDoEditor_Init(editor)
         prevButton = button;
     end
 
+    editor.buttons = {editor.framesList:GetChildren()};
     function editor:UpdateList(data)
         local frameCount = table.getn(data);
-        local buttons = {editor.framesList:GetChildren()};
+        local buttons = editor.buttons;
         local limit = math.min(frameCount, table.getn(buttons) - 1);
-        for i=1,frameCount do
+        for i=1,table.getn(buttons) do
             local button = buttons[i];
             local frame = data[i];
             if frame then
@@ -70,6 +83,7 @@ function CanDoEditor_Init(editor)
                 button:Enable();
                 button:SetScript("OnClick", onButtonClick)
                 button.data = frame;
+                button.dataIndex = i;
             else
                 button:SetText("");
                 button:Hide();
@@ -83,7 +97,6 @@ function CanDoEditor_Init(editor)
         lastButton:Enable();
 
         lastButton:SetScript("OnClick", function (self)
-            CanDo_Print("Create");
             self:GetHighlightTexture():SetVertexColor(1.0, 1.0, 0);
             self:LockHighlight();
 
@@ -94,6 +107,8 @@ function CanDoEditor_Init(editor)
                 editor.currentButton:UnlockHighlight();
             end
             editor.currentButton = self;
+
+            editor.deleteButton:Disable();
         end)
     end
 
@@ -112,6 +127,9 @@ function CanDoEditor_Init(editor)
             CanDoEditorUpdateDisplayPanel(editor, data[table.getn(data)]);
             editor.createPanel:Hide();
             editor.currentPanel:Show();
+            editor.createPanel.nameInput:SetText(""); 
+            editor.currentButton = editor.buttons[table.getn(data)]
+            editor.deleteButton:Enable();
         end
     end)
 end

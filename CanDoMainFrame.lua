@@ -271,3 +271,8 @@ function CanDoMainFrame_AddNewFrame(name)
 
     return CanDoCharacterData.frames;
 end
+
+function CanDoMainFrame_RemoveFrame(index)
+    table.remove(CanDoCharacterData.frames, index);
+    return CanDoCharacterData.frames;
+end
