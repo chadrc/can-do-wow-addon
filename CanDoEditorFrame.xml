@@ -17,10 +17,6 @@
             <OnLoad>
                 self:GetHighlightTexture():SetVertexColor(.196, .388, .8);
             </OnLoad>
-            <!-- <OnClick>
-                self:GetHighlightTexture():SetVertexColor(1.0, 1.0, 0);
-                self:LockHighlight();
-            </OnClick> -->
         </Scripts>
         <ButtonText name="$parentText" justifyH="LEFT" wordwrap="false" text="Frame One"/>
         <NormalFont style="GameFontNormal"/>
@@ -73,6 +69,29 @@
                 </Layers>
             </Frame>
 
+            <Frame parentKey="createPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate" hidden="true">
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentFramesList" relativePoint="TOPRIGHT">
+                        <Offset x="16" y="0"/>
+                    </Anchor>
+                    <Anchor point="BOTTOMLEFT" relativeTo="$parentFramesList" relativePoint="BOTTOMRIGHT">
+                        <Offset x="16" y="1"/>
+                    </Anchor>
+                    <Anchor point="RIGHT">
+                        <Offset x="-22" y="0"/>
+                    </Anchor>
+                </Anchors>
+
+                <Layers>
+                    <Layer>
+                        <FontString parentKey="title" text="Create" inherits="GameFontNormal">
+                            <Anchors>
+                                <Anchor point="TOP" y="-13"/>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+            </Frame>
 
             <Frame parentKey="displayOptionsPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate">
                 <Anchors>
