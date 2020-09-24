@@ -1,13 +1,9 @@
 ## Interface: 80300
 ## Title: CanDo
-## Author: Chad Collins
+## Author: YulePanda
 ## Version: 0.1
 ## SavedVariablesPerCharacter: CanDoCharacterData
 
-CanDo.lua
 CanDoEditorToggleTabs.xml
-CanDoEditorToggleTabs.lua
 CanDoEditorFrame.xml
-CanDoEditorFrame.lua
 CanDoMainFrame.xml
-CanDoMainFrame.lua
