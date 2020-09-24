@@ -81,16 +81,75 @@
                         <Offset x="-22" y="0"/>
                     </Anchor>
                 </Anchors>
-
                 <Layers>
                     <Layer>
-                        <FontString parentKey="title" text="Create" inherits="GameFontNormal">
+                        <FontString name="$parentTitle" parentKey="title" text="Create" inherits="GameFontNormal" size="24">
                             <Anchors>
-                                <Anchor point="TOP" y="-13"/>
+                                <Anchor point="TOPLEFT" x="13" y="-13"/>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                    <Layer>
+                        <FontString name="$parentNameText" parentKey="nameText" text="Name" inherits="GameFontNormal">
+                            <Anchors>
+                                <Anchor point="TOP" relativeTo="$parentTitle" relativePoint="BOTTOM" y="-13"/>
                             </Anchors>
                         </FontString>
                     </Layer>
                 </Layers>
+                <Frames>
+                    <EditBox name="InputBoxTemplate" inherits="InputBoxScriptTemplate" autofocus="false">
+                        <Size x="200" y="20"/>
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="$parentNameText" relativePoint="RIGHT" x="13"/>
+                        </Anchors>
+
+                        <Layers>
+                            <Layer level="BACKGROUND">
+                                <Texture parentKey="Left" atlas="common-search-border-left" useAtlasSize="false">
+                                    <Size x="8" y="20"/>
+                                    <Anchors>
+                                        <Anchor point="LEFT" x="-5" y="0"/>
+                                    </Anchors>
+                                </Texture>
+                                <Texture parentKey="Right" atlas="common-search-border-right">
+                                    <Size x="8" y="20"/>
+                                    <Anchors>
+                                        <Anchor point="RIGHT" x="0" y="0"/>
+                                    </Anchors>
+                                </Texture>
+                                <Texture parentKey="Middle" atlas="common-search-border-middle">
+                                    <Size x="10" y="20"/>
+                                    <Anchors>
+                                        <Anchor point="LEFT" relativeKey="$parent.Left" relativePoint="RIGHT"/>
+                                        <Anchor point="RIGHT" relativeKey="$parent.Right" relativePoint="LEFT"/>
+                                    </Anchors>
+                                </Texture>
+                            </Layer>
+                        </Layers>
+                        <FontString inherits="ChatFontNormal"/>
+                        <Scripts>
+
+                        </Scripts>
+                    </EditBox>
+                    <Button name="$parentCreateFrameButton" inherits="UIPanelButtonTemplate" text="Create">
+                        <Anchors>
+                            <Anchor point="LEFT" relativeTo="$parentNameText"/>
+                            <Anchor point="TOP" relativeTo="$parentNameText" relativePoint="BOTTOM" y="-13"/>
+                        </Anchors>
+                        <Size x="70" y="24"/>
+                        <Scripts>
+                            <OnClick>
+                                CanDo_Print("Create button click");
+                            </OnClick>
+                            <OnMouseUp>
+                            </OnMouseUp>
+                            <OnMouseDown>
+                            </OnMouseDown>
+                        </Scripts>
+                    </Button>
+                </Frames>
+
             </Frame>
 
             <Frame parentKey="displayOptionsPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate">

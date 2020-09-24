@@ -1,6 +1,7 @@
 
 function CanDoEditor_Init(editor)
     editor.currentPanel = editor.displayOptionsPanel;
+    editor.createPanel.title:SetFont(editor.createPanel.title:GetFont(), 18);
     CanDo_Print(editor.displayToggleTab:Deactivate())
     tinsert(UISpecialFrames, editor:GetName());
 
