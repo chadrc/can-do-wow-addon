@@ -8,6 +8,15 @@ function CanDoEditor_Init(editor)
     editor.displayToggleTab:Hide();
     editor.itemsToggleTab:Hide();
 
+    editor.createPanel.nameInput:OnTextChanged(function (self)
+        local text = self:GetText():gsub("%s+", "");
+        if string.len(text) > 0 then
+            editor.createPanel.createButton:Enable();
+        else
+            editor.createPanel.createButton:Disable();
+        end
+    end)
+
     editor.deleteButton:SetScript("OnClick", function ()
         CanDo_Print("deleting: ", editor.currentButton.dataIndex);
 
@@ -128,7 +137,6 @@ function CanDoEditor_Init(editor)
     editor.createPanel.createButton:SetScript("OnClick", function ()
         local newFrameName = editor.createPanel.nameInput:GetText():gsub("%s+", "");
         if string.len(newFrameName) > 0 then
-            CanDo_Print("Creating: ", newFrameName);
             local data = CanDoMainFrame_AddNewFrame(newFrameName);
             editor:UpdateList(data);
             CanDoEditorUpdateDisplayPanel(editor, data[table.getn(data)]);
@@ -165,11 +173,3 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     display.title:SetText(data.name);
 end
 
-function CanDoCreateFrameInput_OnTextChanged(self)
-    local text = self:GetText():gsub("%s+", "");
-    if string.len(text) > 0 then
-        self:GetParent().createButton:Enable();
-    else
-        self:GetParent().createButton:Disable();
-    end
-end

@@ -1,0 +1,46 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\..\FrameXML\UI.xsd">
+    <Script file="CanDoInputTemplates.lua"/>
+
+    <Frame name="CanDoTextInputTemplate" virtual="true" mixin="CanDo_TextInputMixin">
+        <Layers>
+            <Layer>
+                <FontString parentKey="label" name="$parentLabel" text="Name" inherits="GameFontNormal" justifyH="LEFT">
+                </FontString>
+            </Layer>
+        </Layers>
+        <Frames>
+            <EditBox parentKey="input" name="$parentInputBox" inherits="InputBoxScriptTemplate" autofocus="false">
+                <Size x="200" y="20"/>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parentLabel" relativePoint="RIGHT" x="13"/>
+                </Anchors>
+
+                <Layers>
+                    <Layer level="BACKGROUND">
+                        <Texture parentKey="Left" atlas="common-search-border-left" useAtlasSize="false">
+                            <Size x="8" y="20"/>
+                            <Anchors>
+                                <Anchor point="LEFT" x="-5" y="0"/>
+                            </Anchors>
+                        </Texture>
+                        <Texture parentKey="Right" atlas="common-search-border-right">
+                            <Size x="8" y="20"/>
+                            <Anchors>
+                                <Anchor point="RIGHT" x="0" y="0"/>
+                            </Anchors>
+                        </Texture>
+                        <Texture parentKey="Middle" atlas="common-search-border-middle">
+                            <Size x="10" y="20"/>
+                            <Anchors>
+                                <Anchor point="LEFT" relativeKey="$parent.Left" relativePoint="RIGHT"/>
+                                <Anchor point="RIGHT" relativeKey="$parent.Right" relativePoint="LEFT"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <FontString inherits="ChatFontNormal"/>
+            </EditBox>
+        </Frames>
+    </Frame>
+</Ui>

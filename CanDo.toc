@@ -4,6 +4,7 @@
 ## Version: 0.1
 ## SavedVariablesPerCharacter: CanDoCharacterData
 
+CanDoInputTemplates.xml
 CanDoEditorToggleTabs.xml
 CanDoEditorFrame.xml
 CanDoMainFrame.xml

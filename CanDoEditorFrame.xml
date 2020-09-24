@@ -95,53 +95,19 @@
                             </Anchors>
                         </FontString>
                     </Layer>
-                    <Layer>
-                        <FontString name="$parentNameText" parentKey="nameText" text="Name" inherits="GameFontNormal">
-                            <Anchors>
-                                <Anchor point="TOP" relativeTo="$parentTitle" relativePoint="BOTTOM" y="-13"/>
-                            </Anchors>
-                        </FontString>
-                    </Layer>
                 </Layers>
                 <Frames>
-                    <EditBox parentKey="nameInput" name="InputBoxTemplate" inherits="InputBoxScriptTemplate" autofocus="false">
+                    <Frame parentKey="nameInput" name="$parentInputBox" inherits="CanDoTextInputTemplate">
                         <Size x="200" y="20"/>
                         <Anchors>
-                            <Anchor point="LEFT" relativeTo="$parentNameText" relativePoint="RIGHT" x="13"/>
+                            <Anchor point="LEFT" relativeTo="$parentTitle" x="10"/>
+                            <Anchor point="TOP" relativeTo="$parentTitle" relativePoint="BOTTOM" y="-10"/>
                         </Anchors>
-
-                        <Layers>
-                            <Layer level="BACKGROUND">
-                                <Texture parentKey="Left" atlas="common-search-border-left" useAtlasSize="false">
-                                    <Size x="8" y="20"/>
-                                    <Anchors>
-                                        <Anchor point="LEFT" x="-5" y="0"/>
-                                    </Anchors>
-                                </Texture>
-                                <Texture parentKey="Right" atlas="common-search-border-right">
-                                    <Size x="8" y="20"/>
-                                    <Anchors>
-                                        <Anchor point="RIGHT" x="0" y="0"/>
-                                    </Anchors>
-                                </Texture>
-                                <Texture parentKey="Middle" atlas="common-search-border-middle">
-                                    <Size x="10" y="20"/>
-                                    <Anchors>
-                                        <Anchor point="LEFT" relativeKey="$parent.Left" relativePoint="RIGHT"/>
-                                        <Anchor point="RIGHT" relativeKey="$parent.Right" relativePoint="LEFT"/>
-                                    </Anchors>
-                                </Texture>
-                            </Layer>
-                        </Layers>
-                        <FontString inherits="ChatFontNormal"/>
-                        <Scripts>
-                            <OnTextChanged function="CanDoCreateFrameInput_OnTextChanged"/>
-                        </Scripts>
-                    </EditBox>
+                    </Frame>
                     <Button name="$parentCreateFrameButton" parentKey="createButton" inherits="UIPanelButtonTemplate" text="Create" enabled="false">
                         <Anchors>
-                            <Anchor point="LEFT" relativeTo="$parentNameText"/>
-                            <Anchor point="TOP" relativeTo="$parentNameText" relativePoint="BOTTOM" y="-13"/>
+                            <Anchor point="LEFT" relativeTo="$parentInputBox"/>
+                            <Anchor point="TOP" relativeTo="$parentInputBox" relativePoint="BOTTOM" y="-10"/>
                         </Anchors>
                         <Size x="70" y="24"/>
                         <Scripts>
