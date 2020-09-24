@@ -110,12 +110,6 @@
                             <Anchor point="TOP" relativeTo="$parentInputBox" relativePoint="BOTTOM" y="-10"/>
                         </Anchors>
                         <Size x="70" y="24"/>
-                        <Scripts>
-                            <OnMouseUp>
-                            </OnMouseUp>
-                            <OnMouseDown>
-                            </OnMouseDown>
-                        </Scripts>
                     </Button>
                 </Frames>
 
