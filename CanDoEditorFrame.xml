@@ -228,6 +228,18 @@
                     <AbsDimension x="100" y="24"/>
                 </Size>
             </Frame>
+            <Button name="$parentDoneButton" parentKey="doneButton" inherits="UIPanelButtonTemplate" text="Done">
+                <Anchors>
+                    <Anchor point="TOP" relativeTo="$parentItemsOptions" relativePoint="BOTTOM" y="-5"/>
+                    <Anchor point="RIGHT" relativeTo="$parentItemsOptions"/>
+                </Anchors>
+                <Size x="70" y="24"/>
+                <Scripts>
+                    <OnClick>
+                        self:GetParent():Hide();
+                    </OnClick>
+                </Scripts>
+            </Button>
         </Frames>
     </Frame>
 </Ui>
