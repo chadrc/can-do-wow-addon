@@ -265,3 +265,9 @@ function CanDoMainFrame_CreateCanDoItem(itemData, frame, activeFrame)
     };
 end
 
+function CanDoMainFrame_AddNewFrame(name)
+    local n = CanDo_CreateEmptyFrame(name);
+    table.insert(CanDoCharacterData.frames, n);
+
+    return CanDoCharacterData.frames;
+end

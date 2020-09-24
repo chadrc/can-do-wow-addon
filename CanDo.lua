@@ -2,6 +2,33 @@ function CanDo_Print(...)
     print("CanDo: ", ...);
 end
 
+function CanDo_CreateEmptyFrame(name)
+    return {
+        name = name,
+        display = {
+            buttonSize = 40,
+            backgroundAlpha = 0,
+            backgroundColor = {r = 0, g = 0, b = 0},
+            activeButtonAlpha = .5,
+            inactiveButtonAlpha = .15,
+            arrangement = {
+                type = "grid",
+                rows = 3,
+                columns = 4,
+                padding = 5,
+            },
+            positioning = {
+                type = "relative",
+                anchor = "CENTER",
+                relativeAnchor = "CENTER",
+                offsetX = 0,
+                offsetY = 0,
+            },
+        },
+        items = {}
+    }
+end
+
 function CanDo_CreateInitialCharacterData()
     return {
         frames = {
