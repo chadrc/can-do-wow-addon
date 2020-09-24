@@ -98,7 +98,7 @@
                     </Layer>
                 </Layers>
                 <Frames>
-                    <EditBox name="InputBoxTemplate" inherits="InputBoxScriptTemplate" autofocus="false">
+                    <EditBox parentKey="nameInput" name="InputBoxTemplate" inherits="InputBoxScriptTemplate" autofocus="false">
                         <Size x="200" y="20"/>
                         <Anchors>
                             <Anchor point="LEFT" relativeTo="$parentNameText" relativePoint="RIGHT" x="13"/>
@@ -129,19 +129,16 @@
                         </Layers>
                         <FontString inherits="ChatFontNormal"/>
                         <Scripts>
-
+                            <OnTextChanged function="CanDoCreateFrameInput_OnTextChanged"/>
                         </Scripts>
                     </EditBox>
-                    <Button name="$parentCreateFrameButton" inherits="UIPanelButtonTemplate" text="Create">
+                    <Button name="$parentCreateFrameButton" parentKey="createButton" inherits="UIPanelButtonTemplate" text="Create" enabled="false">
                         <Anchors>
                             <Anchor point="LEFT" relativeTo="$parentNameText"/>
                             <Anchor point="TOP" relativeTo="$parentNameText" relativePoint="BOTTOM" y="-13"/>
                         </Anchors>
                         <Size x="70" y="24"/>
                         <Scripts>
-                            <OnClick>
-                                CanDo_Print("Create button click");
-                            </OnClick>
                             <OnMouseUp>
                             </OnMouseUp>
                             <OnMouseDown>

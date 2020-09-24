@@ -12,7 +12,7 @@ function CanDoEditor_Init(editor)
         CanDoEditorOnDisplayTabClicked(editor);
     end);
 
-    function editor:Open(data)
+    function editor:DrawFramesList(data)
         local prevButton;
         if table.getn(data) > 0 then 
             local function CreateButton(d) 
@@ -78,9 +78,20 @@ function CanDoEditor_Init(editor)
             button:ClearAllPoints(); 
             button:SetPoint("TOP", prevButton, "BOTTOM", 0, -5);
         end
+    end
+
+    function editor:Open(data)
+        editor:DrawFramesList(data);
 
         editor:Show();
     end
+
+    editor.createPanel.createButton:SetScript("OnClick", function ()
+        local newFrameName = editor.createPanel.nameInput:GetText():gsub("%s+", "");
+        if string.len(newFrameName) > 0 then
+            CanDo_Print("Creating: ", newFrameName);
+        end
+    end)
 end
 
 function CanDoEditorOnDisplayTabClicked(editor)
@@ -105,4 +116,13 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     local display = editor.displayOptionsPanel;
 
     display.title:SetText(data.name);
+end
+
+function CanDoCreateFrameInput_OnTextChanged(self)
+    local text = self:GetText():gsub("%s+", "");
+    if string.len(text) > 0 then
+        self:GetParent().createButton:Enable();
+    else
+        self:GetParent().createButton:Disable();
+    end
 end
