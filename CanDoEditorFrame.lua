@@ -5,6 +5,8 @@ function CanDoEditor_Init(editor)
     editor.createPanel.title:SetFont(editor.createPanel.title:GetFont(), 18);
     editor.displayToggleTab:Deactivate()
     editor.deleteButton:Disable();
+    editor.displayToggleTab:Hide();
+    editor.itemsToggleTab:Hide();
 
     editor.deleteButton:SetScript("OnClick", function ()
         CanDo_Print("deleting: ", editor.currentButton.dataIndex);
@@ -37,6 +39,9 @@ function CanDoEditor_Init(editor)
         end
         editor.currentButton = self;
         editor.deleteButton:Enable();
+
+        editor.displayToggleTab:Show();
+        editor.itemsToggleTab:Show();
     end
     
     local createButton = function (i)
@@ -109,6 +114,8 @@ function CanDoEditor_Init(editor)
             editor.currentButton = self;
 
             editor.deleteButton:Disable();
+            editor.displayToggleTab:Hide();
+            editor.itemsToggleTab:Hide();
         end)
     end
 
