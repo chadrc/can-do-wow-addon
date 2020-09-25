@@ -42,5 +42,8 @@
                 <FontString inherits="ChatFontNormal"/>
             </EditBox>
         </Frames>
+        <Scripts>
+            <OnLoad>self:OnLoad()</OnLoad>
+        </Scripts>
     </Frame>
 </Ui>

@@ -99,6 +99,9 @@
                 <Frames>
                     <Frame parentKey="nameInput" name="$parentInputBox" inherits="CanDoTextInputTemplate">
                         <Size x="200" y="20"/>
+                        <KeyValues>
+                            <KeyValue key="labelText" value="Name"/>
+                        </KeyValues>
                         <Anchors>
                             <Anchor point="LEFT" relativeTo="$parentTitle" x="10"/>
                             <Anchor point="TOP" relativeTo="$parentTitle" relativePoint="BOTTOM" y="-10"/>
@@ -112,12 +115,9 @@
                         <Size x="70" y="24"/>
                     </Button>
                 </Frames>
-
             </Frame>
 
             <Frame parentKey="displayOptionsPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate">
-                <!-- <Size x="175" y="200"/> -->
-
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parentFramesList" relativePoint="TOPRIGHT">
                         <Offset x="16" y="0"/>
@@ -130,7 +130,7 @@
                     </Anchor>
                 </Anchors>
                 <Frames>
-                    <Frame name="$parentDisplayForm">
+                    <Frame parentKey="displayForm" name="$parentDisplayForm">
                         <Size x="175" y="200"/>
 
                         <Anchors>
@@ -142,10 +142,21 @@
                                     <Anchors>
                                         <Anchor point="TOPLEFT" x="13" y="-13"/>
                                     </Anchors>
-
                                 </FontString>
                             </Layer>
                         </Layers>
+                        <Frames>
+                            <Frame parentKey="buttonSizeInput" name="$parentButtonSizeInput" inherits="CanDoTextInputTemplate">
+                                <Size x="200" y="20"/>
+                                <KeyValues>
+                                    <KeyValue key="labelText" value="Button Size"/>
+                                </KeyValues>
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="$parentHeader" x="10"/>
+                                    <Anchor point="TOP" relativeTo="$parentHeader" relativePoint="BOTTOM" y="-10"/>
+                                </Anchors>
+                            </Frame>
+                        </Frames>
                         <Scripts>
                             <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>
                         </Scripts>

@@ -31,6 +31,7 @@ function CanDoEditor_Init(editor)
     editor.itemsToggleTab:SetOnActivate(function ()
         CanDoEditorOnItemsTabClicked(editor);
     end);
+
     editor.displayToggleTab:SetOnActivate(function ()
         CanDoEditorOnDisplayTabClicked(editor);
     end);
@@ -147,6 +148,9 @@ function CanDoEditor_Init(editor)
             editor.deleteButton:Enable();
         end
     end)
+
+    -- display panel
+    CanDoEditor_SetupDisplayPanel(editor);
 end
 
 function CanDoEditorOnDisplayTabClicked(editor)
@@ -168,8 +172,24 @@ function CanDoEditorOnItemsTabClicked(editor)
 end
 
 function CanDoEditorUpdateDisplayPanel(editor, data)
-    local display = editor.displayOptionsPanel;
+    local display = data.display;
+    local form = editor.displayOptionsPanel.displayForm;
 
-    -- display.title:SetText(data.name);
+    form.buttonSizeInput:SetText(display.buttonSize);
+end
+
+function CanDoEditor_SetupDisplayPanel(editor)
+    local form = editor.displayOptionsPanel.displayForm;
+
+    form.buttonSizeInput:OnEnterPressed(function (input)
+        input:ClearFocus();
+        local value = tonumber(input:GetText(), 10);
+        if value == nil then
+            input:SetText(editor.currentButton.data.display.buttonSize);
+            return;
+        end
+        
+        CanDo_Print("enter: ", input:GetText())
+    end);
 end
 
