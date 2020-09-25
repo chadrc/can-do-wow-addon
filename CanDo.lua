@@ -59,7 +59,7 @@ function CanDo_CreateInitialCharacterData()
                         anchor = "CENTER",
                         relativeAnchor = "CENTER",
                         -- values in percentage of screen
-                        offsetX = -.25,
+                        offsetX = 0,
                         offsetY = -.05,
                     },
                     -- positioning = {

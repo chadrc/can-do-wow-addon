@@ -39,7 +39,6 @@ function CanDoEditor_Init(editor)
     local onButtonClick = function (self)
         self:GetHighlightTexture():SetVertexColor(1.0, 1.0, 0);
         self:LockHighlight();
-        CanDoEditorUpdateDisplayPanel(editor, self.data);
 
         editor.currentPanel:Show();
         editor.createPanel:Hide();
@@ -52,6 +51,8 @@ function CanDoEditor_Init(editor)
 
         editor.displayToggleTab:Show();
         editor.itemsToggleTab:Show();
+        
+        CanDoEditorUpdateDisplayPanel(editor, self.data);
     end
     
     local createButton = function (i)
@@ -177,8 +178,10 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
 
     form.buttonSizeInput:SetText(display.buttonSize);
 
-    local c = data.display.backgroundColor;
+    local c = display.backgroundColor;
     form.backgroundColorInput.picker.texture:SetColorTexture(c.r, c.g, c.b, c.a);
+
+    form.activeButtonAlphaSlider:SetValue(display.activeButtonAlpha);
 end
 
 function CanDoEditor_SetupDisplayPanel(editor)
@@ -226,6 +229,12 @@ function CanDoEditor_SetupDisplayPanel(editor)
         end
 
         ColorPickerFrame:Show();
+    end)
+
+    form.activeButtonAlphaSlider:SetScript("OnValueChanged", function ()
+        local newValue = form.activeButtonAlphaSlider:GetValue();
+        editor.currentButton.data.display.activeButtonAlpha = newValue;
+        editor.redrawFrames();
     end)
 end
 

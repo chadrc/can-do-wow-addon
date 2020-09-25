@@ -195,6 +195,58 @@
                                     </Frame>
                                 </Frames>
                             </Frame>
+                            <Slider parentKey="activeButtonAlphaSlider" name="$parentActiveButtonAlphaSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="0.01">
+                                <Size x="100" y="17"/>
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="$parentHeader" x="148"/>
+                                    <Anchor point="TOP" relativeTo="$parentBackgroundInput" relativePoint="BOTTOM" y="-15"/>
+                                </Anchors>
+                                <Layers>
+                                    <Layer level="ARTWORK">
+                                        <FontString name="$parentLabel" inherits="GameFontNormal" text="Active Button Alpha">
+                                            <Size x="150" y="14"/>
+                                            <Anchors>
+                                                <Anchor point="RIGHT" relativePoint="LEFT">
+                                                    <Offset>
+                                                        <AbsDimension x="-4" y="1"/>
+                                                    </Offset>
+                                                </Anchor>
+                                            </Anchors>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+                                <Scripts>
+                                    <OnLoad>
+                                        local name = self:GetName();
+                                        _G[name.."Low"]:Hide();
+                                        _G[name.."High"]:Hide();
+                                        self.label = _G[name .. "Label"];
+                                        self.type = CONTROLTYPE_SLIDER;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        <!-- self.type = CONTROLTYPE_SLIDER;
+                                        self.cvar = "Sound_SFXVolume"; -->
+                                        <!-- BlizzardOptionsPanel_RegisterControl(self, self:GetParent()); -->
+                                    </OnLoad>
+                                    <!-- <OnValueChanged>
+						self.value = value;
+						BlizzardOptionsPanel_SetCVarSafe(self.cvar, value);
+						if (self:IsVisible()) then
+							PlaySound(SOUNDKIT.IG_MAINMENU_OPTION_CHECKBOX_ON, "SFX");
+						end
+                                    </OnValueChanged> -->
+                                    <!-- <OnEnter>
+						if ( self:IsEnabled() ) then
+							if ( self.tooltipText ) then
+								GameTooltip:SetOwner(self, self.tooltipOwnerPoint or "ANCHOR_RIGHT");
+								GameTooltip:SetText(self.tooltipText, nil, nil, nil, nil, true);
+							end
+							if (not AudioOptionsSoundPanelSoundEffects:GetChecked()) then
+								GameTooltip:AddLine(MUTED, 1.0, 0.0, 0.0, true);
+								GameTooltip:Show();
+							end
+						end
+                                    </OnEnter> -->
+                                </Scripts>
+                            </Slider>
                         </Frames>
                         <Scripts>
                             <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>
