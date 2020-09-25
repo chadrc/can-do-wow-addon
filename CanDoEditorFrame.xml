@@ -156,6 +156,38 @@
                                     <Anchor point="TOP" relativeTo="$parentHeader" relativePoint="BOTTOM" y="-10"/>
                                 </Anchors>
                             </Frame>
+                            <Frame parentKey="backgroundColorInput" name="$parentBackgroundInput">
+                                <Size x="200" y="20"/>
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="$parentHeader" x="10"/>
+                                    <Anchor point="TOP" relativeTo="$parentButtonSizeInput" relativePoint="BOTTOM" y="-10"/>
+                                </Anchors>
+                                <Layers>
+                                    <Layer>
+                                        <FontString parentKey="label" name="$parentLabel" text="Background Color" inherits="GameFontNormal" justifyH="LEFT">
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+                                <Frames>
+                                    <Frame parentKey="picker" name="$parentPicker">
+                                        <Size x="20" y="20"/>
+                                        <Anchors>
+                                            <Anchor point="LEFT" relativeTo="$parentLabel" relativePoint="RIGHT" x="20"/>
+                                        </Anchors>
+                                        <Layers>
+                                            <Layer level="ARTWORK">
+                                                <Texture parentKey="texture" name="$parentSelectedColorSwatch">
+                                                    <Size x="20" y="20"/>
+                                                    <Anchors>
+                                                        <Anchor point="CENTER"/>
+                                                    </Anchors>
+                                                    <Color r="1.0" g="1.0" b="1.0" a="1.0"/>
+                                                </Texture>
+                                            </Layer>
+                                        </Layers>
+                                    </Frame>
+                                </Frames>
+                            </Frame>
                         </Frames>
                         <Scripts>
                             <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>

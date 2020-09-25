@@ -176,6 +176,9 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     local form = editor.displayOptionsPanel.displayForm;
 
     form.buttonSizeInput:SetText(display.buttonSize);
+
+    local c = data.display.backgroundColor;
+    form.backgroundColorInput.picker.texture:SetColorTexture(c.r, c.g, c.b, c.a);
 end
 
 function CanDoEditor_SetupDisplayPanel(editor)
@@ -192,5 +195,35 @@ function CanDoEditor_SetupDisplayPanel(editor)
         editor.currentButton.data.display.buttonSize = value;
         editor.redrawFrames();
     end);
+
+    form.backgroundColorInput.picker:SetScript("OnMouseUp", function ()
+        -- quick clone so we can reset on cancel
+        local color = {};
+        CanDo_tcopy(color, editor.currentButton.data.display.backgroundColor);
+        ColorPickerFrame:SetColorRGB(color.r, color.g, color.b);
+        ColorPickerFrame.hasOpacity = true;
+        ColorPickerFrame.opacity = color.a;
+        ColorPickerFrame.func = function ()
+            local r, g, b = ColorPickerFrame:GetColorRGB();
+            editor.currentButton.data.display.backgroundColor.r = r;
+            editor.currentButton.data.display.backgroundColor.g = g;
+            editor.currentButton.data.display.backgroundColor.b = b;
+            editor.redrawFrames();
+            form.backgroundColorInput.picker.texture:SetColorTexture(r,g,b, OpacitySliderFrame:GetValue());
+        end
+        ColorPickerFrame.opacityFunc = function ()
+            editor.currentButton.data.display.backgroundColor.a = OpacitySliderFrame:GetValue();
+            local r, g, b = ColorPickerFrame:GetColorRGB();
+            form.backgroundColorInput.picker.texture:SetColorTexture(r, g, b, OpacitySliderFrame:GetValue());
+            editor.redrawFrames();
+        end 
+        ColorPickerFrame.cancelFunc = function ()
+            editor.currentButton.data.display.backgroundColor = color;
+            form.backgroundColorInput.picker.texture:SetColorTexture(color.r, color.g, color.b, color.a);
+            editor.redrawFrames();
+        end
+
+        ColorPickerFrame:Show();
+    end)
 end
 

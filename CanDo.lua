@@ -36,8 +36,7 @@ function CanDo_CreateInitialCharacterData()
                 name = "Main Group",
                 display = {
                     buttonSize = 40,
-                    backgroundAlpha = 0,
-                    backgroundColor = {r = 0, g = 0, b = 0},
+                    backgroundColor = {r = 0, g = 0, b = 0, a = .25},
                     activeButtonAlpha = .5,
                     inactiveButtonAlpha = .15,
                     -- arrangement = {
@@ -60,7 +59,7 @@ function CanDo_CreateInitialCharacterData()
                         anchor = "CENTER",
                         relativeAnchor = "CENTER",
                         -- values in percentage of screen
-                        offsetX = 0,
+                        offsetX = -.25,
                         offsetY = -.05,
                     },
                     -- positioning = {
@@ -150,3 +149,14 @@ function CanDo_CreateInitialCharacterData()
         }
     };
 end
+
+function CanDo_tcopy(to, from)   -- "to" must be a table (possibly empty)
+   for k,v in pairs(from) do
+     if(type(v)=="table") then
+       to[k] = {}
+       CanDo_tcopyy(to[k], v);
+     else
+       to[k] = v;
+     end
+   end
+ end

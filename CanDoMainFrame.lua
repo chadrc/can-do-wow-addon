@@ -129,7 +129,8 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
     local buttonSize = frame.display.buttonSize;
 
     local parentFrame = NextFrameInPool();
-    parentFrame:SetBackdropColor(0,0,0,frame.display.backgroundAlpha);
+    local backClr = frame.display.backgroundColor;
+    parentFrame:SetBackdropColor(backClr.r, backClr.g, backClr.b, backClr.a);
 
     if frame.display.arrangement.type == "grid" then
         local rowCount = frame.display.arrangement.rows;
