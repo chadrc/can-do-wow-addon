@@ -189,7 +189,8 @@ function CanDoEditor_SetupDisplayPanel(editor)
             return;
         end
         
-        CanDo_Print("enter: ", input:GetText())
+        editor.currentButton.data.display.buttonSize = value;
+        editor.redrawFrames();
     end);
 end
 

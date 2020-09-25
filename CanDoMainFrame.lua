@@ -8,6 +8,21 @@ local ActiveData = {
 
 SLASH_CANDO1 = "/cando";
 
+local framePool = {};
+local framesUsed = 0;
+local buttonPool = {};
+local buttonsUsed = 0;
+
+local function NextFrameInPool()
+    framesUsed = framesUsed + 1;
+    return framePool[framesUsed];
+end
+
+local function NextButtonInPool()
+    buttonsUsed = buttonsUsed + 1;
+    return buttonPool[buttonsUsed];
+end
+
 function CanDo_SlashHandler() 
     ActiveData.editorFrame:Open(CanDoCharacterData.frames);
 end
@@ -21,9 +36,30 @@ function CanDoMainFrame_OnLoad(self, event, ...)
     self:RegisterEvent("PLAYER_ENTERING_WORLD");
 
     ActiveData.editorFrame = CanDoEditorFrame;
+    ActiveData.editorFrame.redrawFrames = CanDoMainFrame_RedrawFrames;
     CanDoEditor_Init(ActiveData.editorFrame);
 
     SlashCmdList["CANDO"] = CanDo_SlashHandler;
+
+    -- Create resource pools
+    for i=1,20 do
+        local f = CreateFrame("Frame", "CanDoResourceFrame_" .. i, UIParent);
+        f:SetBackdrop({
+            bgFile = "Interface/Tooltips/UI-Tooltip-Background",          
+            tile = true
+        })
+        table.insert(framePool, f);
+    end
+
+    for i=1,100 do
+        local b = CreateFrame("Button", "CanDoActionButtonFrame_" .. i, UIParent);
+        b.texture = b:CreateTexture();
+        local t = b:CreateFontString("CanDoActionButtonChargeText_" .. i, "ARTWORK", "GameFontNormal");
+        t:SetParent(b);
+        t:SetPoint("CENTER", b, "CENTER", 0, 0);
+        b.chargeText = t;
+        table.insert(buttonPool, b);
+    end
 end
 
 function CanDoMainFrame_OnEvent(self, event, ...)
@@ -72,7 +108,13 @@ function CanDoMainFrame_OnUpdate(self, elapsed)
     end
 end
 
+function CanDoMainFrame_RedrawFrames()
+    CanDoMainFrame_CreateFrames(CanDoCharacterData);
+end
+
 function CanDoMainFrame_CreateFrames(data)
+    framesUsed = 0;
+    buttonsUsed = 0;
     for k, v in pairs(data.frames) do
         ActiveData.frames[k] = {
             frameData = v,
@@ -86,11 +128,7 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
 
     local buttonSize = frame.display.buttonSize;
 
-    local parentFrame = CreateFrame("Frame", "CanDoFrame_" .. frame.name, UIParent);
-    parentFrame:SetBackdrop({
-        bgFile = "Interface/Tooltips/UI-Tooltip-Background",          
-        tile = true
-    });
+    local parentFrame = NextFrameInPool();
     parentFrame:SetBackdropColor(0,0,0,frame.display.backgroundAlpha);
 
     if frame.display.arrangement.type == "grid" then
@@ -200,11 +238,11 @@ function CanDoMainFrame_CreateCanDoItem(itemData, frame, activeFrame)
         -- print("Slot " .. s .. " is empty")
     end
 
-    local smallFrame = CreateFrame("Button", "CanDoActionButton_" .. name, activeFrame.parentFrame);
+    local smallFrame = NextButtonInPool();
+    smallFrame:SetParent(activeFrame.parentFrame);
     smallFrame:SetSize(buttonSize, buttonSize);
 
     if texture then
-        smallFrame.texture = smallFrame:CreateTexture();
         smallFrame.texture:SetPoint("CENTER");
         smallFrame.texture:SetTexture(texture);
         smallFrame.texture:SetSize(buttonSize, buttonSize);
@@ -235,9 +273,7 @@ function CanDoMainFrame_CreateCanDoItem(itemData, frame, activeFrame)
         smallFrame:SetBackdropColor(0,0,0,frame.display.inactiveButtonAlpha);
     end
 
-    local chargeText = smallFrame:CreateFontString("CanDoActionButtonText_" .. name, "ARTWORK", "GameFontNormal");
-    chargeText:SetParent(smallFrame);
-    chargeText:SetPoint("CENTER", smallFrame, "CENTER", 0, 0);
+    local chargeText = smallFrame.chargeText;
     chargeText:SetFont(chargeText:GetFont(), buttonSize / 2, "OUTLINE");
     chargeText:SetTextColor(0, 0.9, 0, 1.0);
     chargeText:SetText("0");
