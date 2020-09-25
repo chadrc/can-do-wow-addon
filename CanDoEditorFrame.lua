@@ -212,9 +212,11 @@ function CanDoEditor_SetupDisplayPanel(editor)
             form.backgroundColorInput.picker.texture:SetColorTexture(r,g,b, OpacitySliderFrame:GetValue());
         end
         ColorPickerFrame.opacityFunc = function ()
-            editor.currentButton.data.display.backgroundColor.a = OpacitySliderFrame:GetValue();
+            -- invert so '+' display lines up with more opaque
+            local newAlpha = 1.0 - OpacitySliderFrame:GetValue();
+            editor.currentButton.data.display.backgroundColor.a = newAlpha;
             local r, g, b = ColorPickerFrame:GetColorRGB();
-            form.backgroundColorInput.picker.texture:SetColorTexture(r, g, b, OpacitySliderFrame:GetValue());
+            form.backgroundColorInput.picker.texture:SetColorTexture(r, g, b, newAlpha);
             editor.redrawFrames();
         end 
         ColorPickerFrame.cancelFunc = function ()

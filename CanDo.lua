@@ -154,7 +154,7 @@ function CanDo_tcopy(to, from)   -- "to" must be a table (possibly empty)
    for k,v in pairs(from) do
      if(type(v)=="table") then
        to[k] = {}
-       CanDo_tcopyy(to[k], v);
+       CanDo_tcopy(to[k], v);
      else
        to[k] = v;
      end

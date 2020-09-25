@@ -75,7 +75,7 @@
                 <Size x="70" y="24"/>
             </Button>
 
-            <Frame parentKey="createPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate" hidden="true">
+            <Frame parentKey="createPanel" name="$parentCreatePanel" inherits="CanDoSettingsPanelTemplate" hidden="true">
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parentFramesList" relativePoint="TOPRIGHT">
                         <Offset x="16" y="0"/>
@@ -117,7 +117,7 @@
                 </Frames>
             </Frame>
 
-            <Frame parentKey="displayOptionsPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate">
+            <Frame parentKey="displayOptionsPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate" hidden="true">
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parentFramesList" relativePoint="TOPRIGHT">
                         <Offset x="16" y="0"/>
@@ -176,6 +176,13 @@
                                         </Anchors>
                                         <Layers>
                                             <Layer level="ARTWORK">
+                                                <Texture name="$parentColorBackground">
+                                                    <Size x="25" y="25"/>
+                                                    <Anchors>
+                                                        <Anchor point="CENTER"/>
+                                                    </Anchors>
+                                                    <Color r="1.0" g="1.0" b="1.0" a="1.0"/>
+                                                </Texture>
                                                 <Texture parentKey="texture" name="$parentSelectedColorSwatch">
                                                     <Size x="20" y="20"/>
                                                     <Anchors>
