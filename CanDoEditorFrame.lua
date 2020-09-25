@@ -51,7 +51,7 @@ function CanDoEditor_Init(editor)
 
         editor.displayToggleTab:Show();
         editor.itemsToggleTab:Show();
-        
+
         CanDoEditorUpdateDisplayPanel(editor, self.data);
     end
     
@@ -182,6 +182,7 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     form.backgroundColorInput.picker.texture:SetColorTexture(c.r, c.g, c.b, c.a);
 
     form.activeButtonAlphaSlider:SetValue(display.activeButtonAlpha);
+    form.inactiveButtonAlphaSlider:SetValue(display.inactiveButtonAlpha);
 end
 
 function CanDoEditor_SetupDisplayPanel(editor)
@@ -234,6 +235,12 @@ function CanDoEditor_SetupDisplayPanel(editor)
     form.activeButtonAlphaSlider:SetScript("OnValueChanged", function ()
         local newValue = form.activeButtonAlphaSlider:GetValue();
         editor.currentButton.data.display.activeButtonAlpha = newValue;
+        editor.redrawFrames();
+    end)
+
+    form.inactiveButtonAlphaSlider:SetScript("OnValueChanged", function ()
+        local newValue = form.inactiveButtonAlphaSlider:GetValue();
+        editor.currentButton.data.display.inactiveButtonAlpha = newValue;
         editor.redrawFrames();
     end)
 end
