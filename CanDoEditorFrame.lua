@@ -170,6 +170,6 @@ end
 function CanDoEditorUpdateDisplayPanel(editor, data)
     local display = editor.displayOptionsPanel;
 
-    display.title:SetText(data.name);
+    -- display.title:SetText(data.name);
 end
 

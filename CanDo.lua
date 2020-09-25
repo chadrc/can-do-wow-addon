@@ -18,7 +18,7 @@ function CanDo_CreateEmptyFrame(name)
                 padding = 5,
             },
             positioning = {
-                type = "relative",
+                type = "absolute",
                 anchor = "CENTER",
                 relativeAnchor = "CENTER",
                 offsetX = 0,

@@ -89,7 +89,7 @@
                 </Anchors>
                 <Layers>
                     <Layer>
-                        <FontString name="$parentTitle" parentKey="title" text="Create" inherits="GameFontNormal" size="24">
+                        <FontString name="$parentTitle" parentKey="title" text="Create" inherits="GameFontNormal">
                             <Anchors>
                                 <Anchor point="TOPLEFT" x="13" y="-13"/>
                             </Anchors>
@@ -116,6 +116,8 @@
             </Frame>
 
             <Frame parentKey="displayOptionsPanel" name="$parentDisplayOptions" inherits="CanDoSettingsPanelTemplate">
+                <!-- <Size x="175" y="200"/> -->
+
                 <Anchors>
                     <Anchor point="TOPLEFT" relativeTo="$parentFramesList" relativePoint="TOPRIGHT">
                         <Offset x="16" y="0"/>
@@ -127,16 +129,66 @@
                         <Offset x="-22" y="0"/>
                     </Anchor>
                 </Anchors>
+                <Frames>
+                    <Frame name="$parentDisplayForm">
+                        <Size x="175" y="200"/>
 
-                <Layers>
-                    <Layer>
-                        <FontString parentKey="title" text="Display" inherits="GameFontNormal">
-                            <Anchors>
-                                <Anchor point="TOP" y="-13"/>
-                            </Anchors>
-                        </FontString>
-                    </Layer>
-                </Layers>
+                        <Anchors>
+                            <Anchor point="TOPLEFT"/>
+                        </Anchors>
+                        <Layers>
+                            <Layer>
+                                <FontString parentKey="header" name="$parentHeader" text="Display" inherits="GameFontNormal">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="13" y="-13"/>
+                                    </Anchors>
+
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>
+                        </Scripts>
+                    </Frame>
+                    <Frame name="$parentPositioningForm">
+                        <Size x="175" y="200"/>
+
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parentDisplayForm" relativePoint="BOTTOMLEFT"/>
+                        </Anchors>
+                        <Layers>
+                            <Layer>
+                                <FontString parentKey="header" name="$parentHeader" text="Positioning" inherits="GameFontNormal">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="13" y="-13"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>
+                        </Scripts>
+                    </Frame>
+                    <Frame name="$parentArrangementForm">
+                        <Size x="175" y="200"/>
+
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parentPositioningForm" relativePoint="BOTTOMLEFT"/>
+                        </Anchors>
+                        <Layers>
+                            <Layer>
+                                <FontString parentKey="header" name="$parentHeader" text="Arrangement" inherits="GameFontNormal" size="24">
+                                    <Anchors>
+                                        <Anchor point="TOPLEFT" x="13" y="-13"/>
+                                    </Anchors>
+                                </FontString>
+                            </Layer>
+                        </Layers>
+                        <Scripts>
+                            <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>
+                        </Scripts>
+                    </Frame>
+                </Frames>
             </Frame>
 
             <Frame parentKey="itemsOptionsPanel" name="$parentItemsOptions" inherits="CanDoSettingsPanelTemplate" hidden="true">
