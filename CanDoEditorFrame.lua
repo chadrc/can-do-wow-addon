@@ -4,7 +4,16 @@ local buttonsUsed = 0;
 
 local function NextButtonInPool()
     buttonsUsed = buttonsUsed + 1;
-    return buttonPool[buttonsUsed];
+    local b = buttonPool[buttonsUsed];
+    b:Show();
+    return b;
+end
+
+local function CreateButton(i, parent)
+    local b = CreateFrame("Button", "CanDoActionSelectFrame_" .. i, parent);
+    b.texture = b:CreateTexture();
+    b.texture:SetPoint("CENTER");
+    return b;
 end
 
 function CanDoEditor_Init(editor)
@@ -17,9 +26,7 @@ function CanDoEditor_Init(editor)
     editor.itemsToggleTab:Hide();
 
     for i=1,100 do
-        local b = CreateFrame("Button", "CanDoActionSelectFrame_" .. i, editor.itemsOptionsPanel);
-        b.texture = b:CreateTexture();
-        b.texture:SetPoint("CENTER");
+        local b = CreateButton(i, editor.itemsOptionsPanel);
         table.insert(buttonPool, b);
     end
 
@@ -328,83 +335,50 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
 
     local selectedSet = {};
 
-    for k, v in pairs(data.items) do
-        local slot = v.source.slot;
-        selectedSet[slot] = true;
-        local type, gid = GetActionInfo(slot);
-        local name, rank, icon, castTime, minRange, maxRange = "";
+    local function DrawSelectedItems() 
+        buttonsUsed = 0;
+        for k, v in pairs(data.items) do
+            local slot = v.source.slot;
+            selectedSet[slot] = true;
+            local type, gid = GetActionInfo(slot);
+            local name, rank, icon, castTime, minRange, maxRange = "";
 
-        local texture = GetActionTexture(slot);
+            local texture = GetActionTexture(slot);
 
-        local i = k - 1;
-        local row = math.floor(i / 12);
-        local col = i % 12;
+            local i = k - 1;
+            local row = math.floor(i / 12);
+            local col = i % 12;
 
-        local offsetX = col * (buttonSize + padding) + padding;
-        local offsetY = row * (buttonSize + padding) + padding;
+            local offsetX = col * (buttonSize + padding) + padding;
+            local offsetY = row * (buttonSize + padding) + padding;
 
-        local smallFrame = NextButtonInPool();
-        smallFrame:SetParent(selectedParent);
-
-        -- 613534
-        if texture then
+            local smallFrame = NextButtonInPool();
+            smallFrame:SetParent(selectedParent);
             smallFrame:SetSize(buttonSize, buttonSize);
-            smallFrame.texture:SetTexture(texture);
-            smallFrame.texture:SetSize(buttonSize, buttonSize);
-        else
-            smallFrame:SetBackdrop({
-                bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
-                tile = true,
-            });
-            smallFrame:SetBackdropColor(0,0,0,.5);
+
+            -- 613534
+            if texture then
+                smallFrame.texture:SetTexture(texture);
+                smallFrame.texture:SetSize(buttonSize, buttonSize);
+            else
+                smallFrame.texture:SetTexture("");
+                smallFrame.texture:Hide();
+                smallFrame:SetBackdrop({
+                    bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
+                    tile = true,
+                });
+                smallFrame:SetBackdropColor(1,1,1,.5);
+            end
+
+            smallFrame:SetPoint("TOPLEFT", smallFrame:GetParent(), "TOPLEFT", offsetX, -offsetY);
         end
 
-        -- smallFrame:EnableMouse();
-        smallFrame:SetPoint("TOPLEFT", smallFrame:GetParent(), "TOPLEFT", offsetX, -offsetY);
-        
-        local actionButton = {
-            id = gid,
-            frame = smallFrame,
-            name = name,
-            slot = slot,
-            rank = rank,
-            icon = icon,
-            castTime = castTime,
-            minRange = minRange,
-            maxRange = maxRange,
-        };
-        
-        -- smallFrame:SetScript("OnMouseDown", function(self, button)
-        --     if button == "LeftButton" and actionButton.frame['texture'] ~= nil then
-        --         -- print("down " .. s);
-        --         actionButton.frame.texture:SetAlpha(1.0);
-        --     end
-        -- end);
-        -- smallFrame:SetScript("OnClick", function(self, button)
-        --     if button == "LeftButton" then
-        --         print("click " .. name);
-        --         -- CastSpellByName(name)
-        --     end
-        -- end);
-        -- smallFrame:SetScript("OnMouseUp", function(self, button)
-        --     if button == "LeftButton" and actionButton.frame['texture'] ~= nil then
-        --         -- print("up " .. s);
-        --         actionButton.frame.texture:SetAlpha(.75);
-        --     end
-        -- end);
-        -- smallFrame:SetScript("OnEnter", function(self, button)
-        --     -- print("enter " .. s .. " " .. tostring(button));
-        --     if actionButton.frame['texture'] ~= nil then
-        --         actionButton.frame.texture:SetAlpha(.75);
-        --     end
-        -- end);
-        -- smallFrame:SetScript("OnLeave", function(self, button)
-        --     -- print("leave " .. s .. " " .. tostring(button));
-        --     if actionButton.frame['texture'] ~= nil then
-        --         actionButton.frame.texture:SetAlpha(.5);
-        --     end
-        -- end);
+        for i=buttonsUsed + 1, table.getn(buttonPool) do
+            buttonPool[i]:Hide();
+        end
     end
+    
+    DrawSelectedItems();
 
     -- List all actions, highlighting selected ones
     local allActionsPanel = editor.itemsOptionsPanel.allActionsPanel;
@@ -423,20 +397,21 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
         local offsetX = col * (buttonSize + padding) + padding;
         local offsetY = row * (buttonSize + padding) + padding;
 
-        local smallFrame = NextButtonInPool();
+        local smallFrame = CreateButton(s, allActionsPanel);
         smallFrame:SetParent(allActionsPanel);
+        smallFrame:SetSize(buttonSize, buttonSize);
 
-        -- 613534
         if texture then
-            smallFrame:SetSize(buttonSize, buttonSize);
             smallFrame.texture:SetTexture(texture);
             smallFrame.texture:SetSize(buttonSize, buttonSize);
         else
+            smallFrame.texture:SetTexture("");
+            smallFrame.texture:Hide();
             smallFrame:SetBackdrop({
                 bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
                 tile = true,
             });
-            smallFrame:SetBackdropColor(0,0,0,.5);
+            smallFrame:SetBackdropColor(1,1,1,.5);
         end
 
         local selected = selectedSet[slot] == true;
@@ -476,6 +451,7 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
                 })
 
                 editor.redrawFrames();
+                DrawSelectedItems();
             elseif button == "RightButton" and actionButton.selected then
                 -- CanDo_Print("deselect: ", s);
                 actionButton.frame:SetAlpha(.5);
@@ -489,6 +465,7 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
 
                 table.remove(data.items, toRemove);
                 editor.redrawFrames();
+                DrawSelectedItems();
             end
         end);
         smallFrame:SetScript("OnEnter", function(self, button)

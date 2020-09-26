@@ -20,7 +20,9 @@ end
 
 local function NextButtonInPool()
     buttonsUsed = buttonsUsed + 1;
-    return buttonPool[buttonsUsed];
+    local b = buttonPool[buttonsUsed];
+    b:Show();
+    return b;
 end
 
 function CanDo_SlashHandler() 
@@ -120,6 +122,16 @@ function CanDoMainFrame_CreateFrames(data)
             frameData = v,
         }
         CanDoMainFrame_CreateGridFrame(v, ActiveData.frames[k]);
+    end
+
+    for i=framesUsed + 1, table.getn(framePool) do
+        framePool[i]:Hide();
+    end
+
+    CanDo_Print("items: ", table.getn(data.frames[1].items))
+    CanDo_Print("buttons used: ", buttonsUsed);
+    for i=buttonsUsed + 1, table.getn(buttonPool) do
+        buttonPool[i]:Hide();
     end
 end
 
@@ -233,32 +245,20 @@ function CanDoMainFrame_CreateCanDoItem(itemData, frame, activeFrame)
     if texture then
         smallFrame.texture:SetPoint("CENTER");
         smallFrame.texture:SetTexture(texture);
-        smallFrame.texture:SetSize(buttonSize, buttonSize);
         smallFrame.texture:SetAlpha(1);
+        smallFrame.texture:SetSize(buttonSize, buttonSize);
         if not IsUsableAction(slot) then
             smallFrame:SetAlpha(frame.display.inactiveButtonAlpha);
         end
-
-        if not IsPlayerSpell(gid) then
-            smallFrame.texture:SetDesaturated(true);
-            smallFrame:SetBackdrop({
-                bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
-                tile = true,
-                insets = {
-                    top = 2,
-                    bottom = 2,
-                    left = 2,
-                    right = 2,
-                }
-            });
-            smallFrame:SetBackdropColor(1,0,0,1);
-        end
+        smallFrame:SetBackdrop(nil);
     else
+        smallFrame.texture:SetTexture("");
+        smallFrame.texture:Hide();
         smallFrame:SetBackdrop({
             bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
             tile = true,
         });
-        smallFrame:SetBackdropColor(0,0,0,frame.display.inactiveButtonAlpha);
+        smallFrame:SetBackdropColor(1,1,1,.5);
     end
 
     local chargeText = smallFrame.chargeText;
