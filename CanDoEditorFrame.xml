@@ -482,17 +482,6 @@
                                 <Anchors>
                                     <Anchor point="TOPLEFT" relativeTo="$parentHeader" y="-10"/>
                                 </Anchors>
-                                <!-- <Layers>
-                                    <Layer>
-                                        <FontString parentKey="header" name="$parentHeader" text="Circle" inherits="GameFontNormal" justifyH="LEFT">
-                                            <Size x="175" y="20"/>
-
-                                            <Anchors>
-                                                <Anchor point="TOPLEFT" x="13" y="-13"/>
-                                            </Anchors>
-                                        </FontString>
-                                    </Layer>
-                                </Layers> -->
                                 <Frames>
                                     <Slider parentKey="diameterSlider" name="$parentDiameterSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
                                         <Size x="300" y="17"/>
@@ -555,15 +544,22 @@
                     </Anchor>
                 </Anchors>
 
-                <Layers>
-                    <Layer>
-                        <FontString text="Items" parentKey="Text" inherits="GameFontNormal">
-                            <Anchors>
-                                <Anchor point="TOP" y="-13"/>
-                            </Anchors>
-                        </FontString>
-                    </Layer>
-                </Layers>
+                <Frames>
+                    <Frame parentKey="selectedActionsPanel" name="$parentSelectedActionsPanel">
+                        <Size x="175" y="100"/>
+
+                        <Anchors>
+                            <Anchor point="TOPLEFT" y="-10" x="10"/>
+                        </Anchors>
+                    </Frame>
+                    <Frame parentKey="allActionsPanel" name="$parentAllActionsPanel">
+                        <Size x="175" y="200"/>
+
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeTo="$parentSelectedActionsPanel" relativePoint="BOTTOMLEFT" y="-50" />
+                        </Anchors>
+                    </Frame>
+                </Frames>
             </Frame>
 
             <Frame parentKey="itemsToggleTab" name="$parentItemsToggleTab" inherits="CanDoFramesToggleTabButtonTemplate">

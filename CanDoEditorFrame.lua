@@ -1,4 +1,12 @@
 
+local buttonPool = {};
+local buttonsUsed = 0;
+
+local function NextButtonInPool()
+    buttonsUsed = buttonsUsed + 1;
+    return buttonPool[buttonsUsed];
+end
+
 function CanDoEditor_Init(editor)
     tinsert(UISpecialFrames, editor:GetName());
     editor.currentPanel = editor.displayOptionsPanel;
@@ -7,6 +15,13 @@ function CanDoEditor_Init(editor)
     editor.deleteButton:Disable();
     editor.displayToggleTab:Hide();
     editor.itemsToggleTab:Hide();
+
+    for i=1,100 do
+        local b = CreateFrame("Button", "CanDoActionSelectFrame_" .. i, editor.itemsOptionsPanel);
+        b.texture = b:CreateTexture();
+        b.texture:SetPoint("CENTER");
+        table.insert(buttonPool, b);
+    end
 
     editor.createPanel.nameInput:OnTextChanged(function (self)
         local text = self:GetText():gsub("%s+", "");
@@ -186,33 +201,7 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
 
     local positioningForm = editor.displayOptionsPanel.positioningForm;
     local positioning = display.positioning;
-    -- local positioningDropdown = positioningForm.positioningDropdown;
 
-    -- Hiding for now, decide if relative positioning is enough. Ideally would be drag and drop anyway
-    -- local labels = {
-    --     relative = "Relative",
-    --     absolute = "Absolute"
-    -- };
-
-    -- local function OnDropdownItemClicked(self, arg1, arg2, checked)
-    --     UIDropDownMenu_SetText(positioningDropdown, labels[arg1]);
-    --     editor.currentButton.data.display.positioning.type = arg1;
-    --     editor.redrawFrames();
-    --     CloseDropDownMenus();
-    -- end
-
-    -- local function InitDropdownMenu(frame, level, menuList)
-    --     local info = UIDropDownMenu_CreateInfo();
-    --     info.func = OnDropdownItemClicked;
-    --     info.text, info.arg1, info.checked = "Relative", "relative", positioning.type == "relative";
-    --     UIDropDownMenu_AddButton(info)
-    --     info.text, info.arg1, info.checked = "Absolute", "absolute", positioning.type == "absolute";
-    --     UIDropDownMenu_AddButton(info)
-    -- end
-
-    -- UIDropDownMenu_SetWidth(positioningDropdown, 75);
-    -- UIDropDownMenu_SetText(positioningDropdown, labels[positioning.type]);
-    -- UIDropDownMenu_Initialize(positioningDropdown, InitDropdownMenu);
 
     positioningForm.offsetXSlider:SetValueStep(1);
     positioningForm.offsetXSlider:SetMinMaxValues(0, UIParent:GetWidth());
@@ -325,6 +314,198 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     arrangementForm.circleOptions.diameterSlider:SetMinMaxValues(0, UIParent:GetHeight());
     arrangementForm.circleOptions.diameterSlider:SetValue(arrangement.diameter);
     arrangementForm.circleOptions.diameterSlider.valueLabel:SetText(arrangement.diameter);
+
+    -- Update Items Panel
+    local padding = 5;
+    local buttonSize = 30;
+    local itemCount = table.getn(data.items);
+
+    -- Generate selected action buttons
+    local totalWidth = buttonSize * itemCount + padding * (itemCount + 1);
+    local totalHeight = buttonSize + padding * 2;
+
+    local selectedParent = editor.itemsOptionsPanel.selectedActionsPanel;
+
+    local selectedSet = {};
+
+    for k, v in pairs(data.items) do
+        local slot = v.source.slot;
+        selectedSet[slot] = true;
+        local type, gid = GetActionInfo(slot);
+        local name, rank, icon, castTime, minRange, maxRange = "";
+
+        local texture = GetActionTexture(slot);
+
+        local i = k - 1;
+        local row = math.floor(i / 12);
+        local col = i % 12;
+
+        local offsetX = col * (buttonSize + padding) + padding;
+        local offsetY = row * (buttonSize + padding) + padding;
+
+        local smallFrame = NextButtonInPool();
+        smallFrame:SetParent(selectedParent);
+
+        -- 613534
+        if texture then
+            smallFrame:SetSize(buttonSize, buttonSize);
+            smallFrame.texture:SetTexture(texture);
+            smallFrame.texture:SetSize(buttonSize, buttonSize);
+        else
+            smallFrame:SetBackdrop({
+                bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
+                tile = true,
+            });
+            smallFrame:SetBackdropColor(0,0,0,.5);
+        end
+
+        -- smallFrame:EnableMouse();
+        smallFrame:SetPoint("TOPLEFT", smallFrame:GetParent(), "TOPLEFT", offsetX, -offsetY);
+        
+        local actionButton = {
+            id = gid,
+            frame = smallFrame,
+            name = name,
+            slot = slot,
+            rank = rank,
+            icon = icon,
+            castTime = castTime,
+            minRange = minRange,
+            maxRange = maxRange,
+        };
+        
+        -- smallFrame:SetScript("OnMouseDown", function(self, button)
+        --     if button == "LeftButton" and actionButton.frame['texture'] ~= nil then
+        --         -- print("down " .. s);
+        --         actionButton.frame.texture:SetAlpha(1.0);
+        --     end
+        -- end);
+        -- smallFrame:SetScript("OnClick", function(self, button)
+        --     if button == "LeftButton" then
+        --         print("click " .. name);
+        --         -- CastSpellByName(name)
+        --     end
+        -- end);
+        -- smallFrame:SetScript("OnMouseUp", function(self, button)
+        --     if button == "LeftButton" and actionButton.frame['texture'] ~= nil then
+        --         -- print("up " .. s);
+        --         actionButton.frame.texture:SetAlpha(.75);
+        --     end
+        -- end);
+        -- smallFrame:SetScript("OnEnter", function(self, button)
+        --     -- print("enter " .. s .. " " .. tostring(button));
+        --     if actionButton.frame['texture'] ~= nil then
+        --         actionButton.frame.texture:SetAlpha(.75);
+        --     end
+        -- end);
+        -- smallFrame:SetScript("OnLeave", function(self, button)
+        --     -- print("leave " .. s .. " " .. tostring(button));
+        --     if actionButton.frame['texture'] ~= nil then
+        --         actionButton.frame.texture:SetAlpha(.5);
+        --     end
+        -- end);
+    end
+
+    -- List all actions, highlighting selected ones
+    local allActionsPanel = editor.itemsOptionsPanel.allActionsPanel;
+
+    for s=1,72 do
+        local slot = s;
+        local type, gid = GetActionInfo(slot);
+        local name, rank, icon, castTime, minRange, maxRange = "";
+
+        local texture = GetActionTexture(slot);
+
+        local i = s - 1;
+        local row = math.floor(i / 12);
+        local col = i % 12;
+
+        local offsetX = col * (buttonSize + padding) + padding;
+        local offsetY = row * (buttonSize + padding) + padding;
+
+        local smallFrame = NextButtonInPool();
+        smallFrame:SetParent(allActionsPanel);
+
+        -- 613534
+        if texture then
+            smallFrame:SetSize(buttonSize, buttonSize);
+            smallFrame.texture:SetTexture(texture);
+            smallFrame.texture:SetSize(buttonSize, buttonSize);
+        else
+            smallFrame:SetBackdrop({
+                bgFile = "Interface/Tooltips/UI-Tooltip-Background", 
+                tile = true,
+            });
+            smallFrame:SetBackdropColor(0,0,0,.5);
+        end
+
+        local selected = selectedSet[slot] == true;
+        if not selected then
+            smallFrame:SetAlpha(.5);
+        end
+
+        smallFrame:SetPoint("TOPLEFT", smallFrame:GetParent(), "TOPLEFT", offsetX, -offsetY);
+        
+        local actionButton = {
+            id = gid,
+            frame = smallFrame,
+            name = name,
+            slot = slot,
+            rank = rank,
+            icon = icon,
+            castTime = castTime,
+            minRange = minRange,
+            maxRange = maxRange,
+            selected = selected,
+        };
+        
+        smallFrame:EnableMouse();
+        smallFrame:RegisterForClicks("LeftButton", "RightButton");
+        smallFrame:SetScript("OnMouseUp", function(self, button)
+            
+            if button == "LeftButton" and not actionButton.selected then
+                -- CanDo_Print("select: ", s);
+                actionButton.frame:SetAlpha(1.0);
+                actionButton.selected = true;
+                
+                table.insert(data.items, {
+                    source = {
+                        type = "actionbar",
+                        slot = slot,
+                    }
+                })
+
+                editor.redrawFrames();
+            elseif button == "RightButton" and actionButton.selected then
+                -- CanDo_Print("deselect: ", s);
+                actionButton.frame:SetAlpha(.5);
+                actionButton.selected = false;
+                local toRemove;
+                for k, v in pairs(data.items) do
+                    if v.source.slot == actionButton.slot then
+                        toRemove = k;
+                    end
+                end
+
+                table.remove(data.items, toRemove);
+                editor.redrawFrames();
+            end
+        end);
+        smallFrame:SetScript("OnEnter", function(self, button)
+            -- CanDo_Print("enter " .. s .. " " .. tostring(button));
+            if not actionButton.selected then
+                actionButton.frame:SetAlpha(.75);
+            end
+        end);
+        smallFrame:SetScript("OnLeave", function(self, button)
+            -- CanDo_Print("leave " .. s .. " ", actionButton.selected);
+            if actionButton.selected then
+                actionButton.frame:SetAlpha(1.0);
+            else
+                actionButton.frame:SetAlpha(.5);
+            end
+        end);
+    end
 end
 
 function CanDoEditor_SetupDisplayPanel(editor)
