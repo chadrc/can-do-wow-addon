@@ -256,7 +256,7 @@
                             <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>
                         </Scripts>
                     </Frame>
-                    <Frame name="$parentPositioningForm">
+                    <Frame parentKey="positioningForm" name="$parentPositioningForm">
                         <Size x="175" y="200"/>
 
                         <Anchors>
@@ -271,6 +271,26 @@
                                 </FontString>
                             </Layer>
                         </Layers>
+
+                        <Frames>
+                            <Frame parentKey="positioningDropdown" name="$parentPositioningDropdown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+                                <Size x="175" y="200"/>
+
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="$parentHeader" relativePoint="RIGHT">
+                                        <Offset>
+                                            <AbsDimension x="13" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+                            <Frame parentKey="relativeControls" name="$parentRelativeControls">
+
+                            </Frame>
+                            <Frame parentKey="absoluteControls" name="$parentAbsoluteControls">
+
+                            </Frame>
+                        </Frames>
                         <Scripts>
                             <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>
                         </Scripts>

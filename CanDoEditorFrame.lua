@@ -183,12 +183,40 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
 
     form.activeButtonAlphaSlider:SetValue(display.activeButtonAlpha);
     form.inactiveButtonAlphaSlider:SetValue(display.inactiveButtonAlpha);
+
+    local positioning = display.positioning;
+    local positioningDropdown = editor.displayOptionsPanel.positioningForm.positioningDropdown;
+
+    local labels = {
+        relative = "Relative",
+        absolute = "Absolute"
+    };
+
+    local function OnDropdownItemClicked(self, arg1, arg2, checked)
+        UIDropDownMenu_SetText(positioningDropdown, labels[arg1]);
+        editor.currentButton.data.display.positioning.type = arg1;
+        editor.redrawFrames();
+        CloseDropDownMenus();
+    end
+
+    local function InitDropdownMenu(frame, level, menuList)
+        local info = UIDropDownMenu_CreateInfo();
+        info.func = OnDropdownItemClicked;
+        info.text, info.arg1, info.checked = "Relative", "relative", positioning.type == "relative";
+        UIDropDownMenu_AddButton(info)
+        info.text, info.arg1, info.checked = "Absolute", "absolute", positioning.type == "absolute";
+        UIDropDownMenu_AddButton(info)
+    end
+    UIDropDownMenu_SetWidth(positioningDropdown, 75);
+    UIDropDownMenu_SetText(positioningDropdown, labels[positioning.type]);
+    UIDropDownMenu_Initialize(positioningDropdown, InitDropdownMenu);
 end
 
 function CanDoEditor_SetupDisplayPanel(editor)
-    local form = editor.displayOptionsPanel.displayForm;
+    -- Display form
+    local displayForm = editor.displayOptionsPanel.displayForm;
 
-    form.buttonSizeInput:OnEnterPressed(function (input)
+    displayForm.buttonSizeInput:OnEnterPressed(function (input)
         input:ClearFocus();
         local value = tonumber(input:GetText(), 10);
         if value == nil then
@@ -200,7 +228,7 @@ function CanDoEditor_SetupDisplayPanel(editor)
         editor.redrawFrames();
     end);
 
-    form.backgroundColorInput.picker:SetScript("OnMouseUp", function ()
+    displayForm.backgroundColorInput.picker:SetScript("OnMouseUp", function ()
         -- quick clone so we can reset on cancel
         local color = {};
         CanDo_tcopy(color, editor.currentButton.data.display.backgroundColor);
@@ -213,35 +241,39 @@ function CanDoEditor_SetupDisplayPanel(editor)
             editor.currentButton.data.display.backgroundColor.g = g;
             editor.currentButton.data.display.backgroundColor.b = b;
             editor.redrawFrames();
-            form.backgroundColorInput.picker.texture:SetColorTexture(r,g,b, OpacitySliderFrame:GetValue());
+            displayForm.backgroundColorInput.picker.texture:SetColorTexture(r,g,b, OpacitySliderFrame:GetValue());
         end
         ColorPickerFrame.opacityFunc = function ()
             -- invert so '+' display lines up with more opaque
             local newAlpha = 1.0 - OpacitySliderFrame:GetValue();
             editor.currentButton.data.display.backgroundColor.a = newAlpha;
             local r, g, b = ColorPickerFrame:GetColorRGB();
-            form.backgroundColorInput.picker.texture:SetColorTexture(r, g, b, newAlpha);
+            displayForm.backgroundColorInput.picker.texture:SetColorTexture(r, g, b, newAlpha);
             editor.redrawFrames();
         end 
         ColorPickerFrame.cancelFunc = function ()
             editor.currentButton.data.display.backgroundColor = color;
-            form.backgroundColorInput.picker.texture:SetColorTexture(color.r, color.g, color.b, color.a);
+            displayForm.backgroundColorInput.picker.texture:SetColorTexture(color.r, color.g, color.b, color.a);
             editor.redrawFrames();
         end
 
         ColorPickerFrame:Show();
     end)
 
-    form.activeButtonAlphaSlider:SetScript("OnValueChanged", function ()
-        local newValue = form.activeButtonAlphaSlider:GetValue();
+    displayForm.activeButtonAlphaSlider:SetScript("OnValueChanged", function ()
+        local newValue = displayForm.activeButtonAlphaSlider:GetValue();
         editor.currentButton.data.display.activeButtonAlpha = newValue;
         editor.redrawFrames();
     end)
 
-    form.inactiveButtonAlphaSlider:SetScript("OnValueChanged", function ()
-        local newValue = form.inactiveButtonAlphaSlider:GetValue();
+    displayForm.inactiveButtonAlphaSlider:SetScript("OnValueChanged", function ()
+        local newValue = displayForm.inactiveButtonAlphaSlider:GetValue();
         editor.currentButton.data.display.inactiveButtonAlpha = newValue;
         editor.redrawFrames();
     end)
+
+    -- Positioning form
+    local positioningForm = editor.displayOptionsPanel.positioningForm;
+
 end
 
