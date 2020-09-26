@@ -60,7 +60,7 @@ function CanDo_CreateInitialCharacterData()
                         type = "absolute",
                         anchor = "CENTER",
                         relativeAnchor = "CENTER",
-                        offsetX = 300,
+                        offsetX = 0,
                         offsetY = 0,
                     },
                 },

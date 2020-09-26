@@ -78,7 +78,7 @@ function CanDoMainFrame_OnEvent(self, event, ...)
         self:Show();
 
         -- Overwrite for testing
-        CanDoCharacterData = CanDo_CreateInitialCharacterData();
+        -- CanDoCharacterData = CanDo_CreateInitialCharacterData();
     elseif event == "VARIABLES_LOADED" then
     elseif event == "PLAYER_ENTERING_WORLD" then
         -- Create bars
