@@ -340,6 +340,22 @@
                                     </OnLoad>
                                 </Scripts>
                             </Slider>
+                            <Frame parentKey="anchorDropdown" name="$parentAnchorDropdown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+                                <Size x="175" y="20"/>
+
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="$parentHeader" x="-10"/>
+                                    <Anchor point="TOP" relativeTo="$parentOffsetYSlider" relativePoint="BOTTOM" y="-15"/>
+                                </Anchors>
+                            </Frame>
+                            <Frame parentKey="relativeAnchorDropDown" name="$parentRelativeAnchorDropdown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+                                <Size x="175" y="20"/>
+
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="$parentAnchorDropdown" relativePoint="RIGHT"/>
+                                    <!-- <Anchor point="TOP" relativeTo="$parentAnchorDropdown" relativePoint="BOTTOM" y="-15"/> -->
+                                </Anchors>
+                            </Frame>
                         </Frames>
                         <Scripts>
                             <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>

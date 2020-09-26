@@ -215,6 +215,44 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
 
     positioningForm.offsetXSlider:SetValue(positioning.offsetX);
     positioningForm.offsetYSlider:SetValue(positioning.offsetY);
+
+    local anchorLabels = {
+        CENTER = "CENTER",
+        TOP = "TOP",
+        BOTTOM = "BOTTOM",
+        LEFT = "LEFT",
+        RIGHT = "RIGHT",
+        TOPLEFT = "TOPLEFT",
+        TOPRIGHT = "TOPRIGHT",
+        BOTTOMLEFT = "BOTTOMLEFT",
+        BOTTOMRIGHT = "BOTTOMRIGHT",
+    };
+
+    local function initAnchorDropdown(dropdown, data, dataProp, labels)
+        local function OnAnchorDropdownItemClicked(self, arg1, arg2, checked)
+            UIDropDownMenu_SetText(dropdown, arg1);
+            data[dataProp] = arg1;
+            editor.redrawFrames();
+            CloseDropDownMenus();
+        end
+
+        local function InitAnchorDropdownMenu(frame, level, menuList)
+            local info = UIDropDownMenu_CreateInfo();
+            info.func = OnAnchorDropdownItemClicked;
+
+            for k, v in pairs(labels) do
+                info.text, info.arg1, info.checked = v, k, data[dataProp] == v;
+                UIDropDownMenu_AddButton(info)
+            end
+        end
+
+        UIDropDownMenu_SetWidth(dropdown, 75);
+        UIDropDownMenu_SetText(dropdown, data[dataProp]);
+        UIDropDownMenu_Initialize(dropdown, InitAnchorDropdownMenu);
+    end
+
+    initAnchorDropdown(positioningForm.anchorDropdown, positioning, 'anchor', anchorLabels);
+    initAnchorDropdown(positioningForm.relativeAnchorDropDown, positioning, 'relativeAnchor', anchorLabels);
 end
 
 function CanDoEditor_SetupDisplayPanel(editor)
