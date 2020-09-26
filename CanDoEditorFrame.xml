@@ -196,7 +196,7 @@
                                 </Frames>
                             </Frame>
                             <Slider parentKey="activeButtonAlphaSlider" name="$parentActiveButtonAlphaSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
-                                <Size x="100" y="17"/>
+                                <Size x="400" y="17"/>
                                 <Anchors>
                                     <Anchor point="LEFT" relativeTo="$parentHeader" x="148"/>
                                     <Anchor point="TOP" relativeTo="$parentBackgroundInput" relativePoint="BOTTOM" y="-15"/>
@@ -224,7 +224,7 @@
                                 </Scripts>
                             </Slider>
                             <Slider parentKey="inactiveButtonAlphaSlider" name="$parentInactiveButtonAlphaSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
-                                <Size x="100" y="17"/>
+                                <Size x="400" y="17"/>
                                 <Anchors>
                                     <Anchor point="LEFT" relativeTo="$parentHeader" x="153"/>
                                     <Anchor point="TOP" relativeTo="$parentActiveButtonAlphaSlider" relativePoint="BOTTOM" y="-15"/>
@@ -284,12 +284,62 @@
                                     </Anchor>
                                 </Anchors>
                             </Frame>
-                            <Frame parentKey="relativeControls" name="$parentRelativeControls">
-
-                            </Frame>
-                            <Frame parentKey="absoluteControls" name="$parentAbsoluteControls">
-
-                            </Frame>
+                            <Slider parentKey="offsetXSlider" name="$parentOffsetXSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
+                                <Size x="400" y="17"/>
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="$parentHeader" x="114"/>
+                                    <Anchor point="TOP" relativeTo="$parentHeader" relativePoint="BOTTOM" y="-15"/>
+                                </Anchors>
+                                <Layers>
+                                    <Layer level="ARTWORK">
+                                        <FontString name="$parentLabel" inherits="GameFontNormal" text="Offset X">
+                                            <Size x="150" y="14"/>
+                                            <Anchors>
+                                                <Anchor point="RIGHT" relativePoint="LEFT">
+                                                    <Offset>
+                                                        <AbsDimension x="-4" y="1"/>
+                                                    </Offset>
+                                                </Anchor>
+                                            </Anchors>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+                                <Scripts>
+                                    <OnLoad>
+                                        local name = self:GetName();
+                                        _G[name.."Low"]:Hide();
+                                        _G[name.."High"]:Hide();
+                                    </OnLoad>
+                                </Scripts>
+                            </Slider>
+                            <Slider parentKey="offsetYSlider" name="$parentOffsetYSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
+                                <Size x="400" y="17"/>
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="$parentHeader" x="114"/>
+                                    <Anchor point="TOP" relativeTo="$parentOffsetXSlider" relativePoint="BOTTOM" y="-15"/>
+                                </Anchors>
+                                <Layers>
+                                    <Layer level="ARTWORK">
+                                        <FontString name="$parentLabel" inherits="GameFontNormal" text="Offset Y">
+                                            <Size x="150" y="14"/>
+                                            <Anchors>
+                                                <Anchor point="RIGHT" relativePoint="LEFT">
+                                                    <Offset>
+                                                        <AbsDimension x="-4" y="1"/>
+                                                    </Offset>
+                                                </Anchor>
+                                            </Anchors>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+                                <Scripts>
+                                    <OnLoad>
+                                        local name = self:GetName();
+                                        _G[name.."Low"]:Hide();
+                                        _G[name.."High"]:Hide();
+                                    </OnLoad>
+                                </Scripts>
+                            </Slider>
                         </Frames>
                         <Scripts>
                             <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>

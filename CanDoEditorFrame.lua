@@ -184,8 +184,9 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     form.activeButtonAlphaSlider:SetValue(display.activeButtonAlpha);
     form.inactiveButtonAlphaSlider:SetValue(display.inactiveButtonAlpha);
 
+    local positioningForm = editor.displayOptionsPanel.positioningForm;
     local positioning = display.positioning;
-    local positioningDropdown = editor.displayOptionsPanel.positioningForm.positioningDropdown;
+    local positioningDropdown = positioningForm.positioningDropdown;
 
     local labels = {
         relative = "Relative",
@@ -207,9 +208,13 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
         info.text, info.arg1, info.checked = "Absolute", "absolute", positioning.type == "absolute";
         UIDropDownMenu_AddButton(info)
     end
+
     UIDropDownMenu_SetWidth(positioningDropdown, 75);
     UIDropDownMenu_SetText(positioningDropdown, labels[positioning.type]);
     UIDropDownMenu_Initialize(positioningDropdown, InitDropdownMenu);
+
+    positioningForm.offsetXSlider:SetValue(positioning.offsetX);
+    positioningForm.offsetYSlider:SetValue(positioning.offsetY);
 end
 
 function CanDoEditor_SetupDisplayPanel(editor)
@@ -275,5 +280,16 @@ function CanDoEditor_SetupDisplayPanel(editor)
     -- Positioning form
     local positioningForm = editor.displayOptionsPanel.positioningForm;
 
+    positioningForm.offsetXSlider:SetScript("OnValueChanged", function ()
+        local newValue = positioningForm.offsetXSlider:GetValue();
+        editor.currentButton.data.display.positioning.offsetX = newValue;
+        editor.redrawFrames();
+    end)
+
+    positioningForm.offsetYSlider:SetScript("OnValueChanged", function ()
+        local newValue = positioningForm.offsetYSlider:GetValue();
+        editor.currentButton.data.display.positioning.offsetY = newValue;
+        editor.redrawFrames();
+    end)
 end
 
