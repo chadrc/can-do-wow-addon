@@ -477,12 +477,12 @@
                                 </Frames>
                             </Frame>
                             <Frame parentKey="circleOptions" name="$parentCircleOptions" hidden="true">
-                                <Size x="175" y="150"/>
+                                <Size x="175" y="20"/>
 
                                 <Anchors>
                                     <Anchor point="TOPLEFT" relativeTo="$parentHeader" y="-10"/>
                                 </Anchors>
-                                <Layers>
+                                <!-- <Layers>
                                     <Layer>
                                         <FontString parentKey="header" name="$parentHeader" text="Circle" inherits="GameFontNormal" justifyH="LEFT">
                                             <Size x="175" y="20"/>
@@ -492,11 +492,46 @@
                                             </Anchors>
                                         </FontString>
                                     </Layer>
-                                </Layers>
+                                </Layers> -->
                                 <Frames>
-                                    <Frame>
-                                        <Size x="175" y="20"/>
-                                    </Frame>
+                                    <Slider parentKey="diameterSlider" name="$parentDiameterSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
+                                        <Size x="300" y="17"/>
+                                        <Anchors>
+                                            <Anchor point="LEFT" x="120"/>
+                                            <Anchor point="TOP" relativePoint="BOTTOM" y="-10"/>
+                                        </Anchors>
+                                        <Layers>
+                                            <Layer level="ARTWORK">
+                                                <FontString name="$parentLabel" inherits="GameFontNormal" text="Diameter">
+                                                    <Size x="150" y="14"/>
+                                                    <Anchors>
+                                                        <Anchor point="RIGHT" relativePoint="LEFT">
+                                                            <Offset>
+                                                                <AbsDimension x="-4" y="1"/>
+                                                            </Offset>
+                                                        </Anchor>
+                                                    </Anchors>
+                                                </FontString>
+                                                <FontString parentKey="valueLabel" name="$parentValueLabel" inherits="GameFontNormalSmall" text="Spacing" justifyH="LEFT">
+                                                    <Size x="150" y="14"/>
+                                                    <Anchors>
+                                                        <Anchor point="LEFT" relativePoint="RIGHT">
+                                                            <Offset>
+                                                                <AbsDimension x="10" y="1"/>
+                                                            </Offset>
+                                                        </Anchor>
+                                                    </Anchors>
+                                                </FontString>
+                                            </Layer>
+                                        </Layers>
+                                        <Scripts>
+                                            <OnLoad>
+                                                    local name = self:GetName();
+                                                    _G[name.."Low"]:Hide();
+                                                    _G[name.."High"]:Hide();
+                                            </OnLoad>
+                                        </Scripts>
+                                    </Slider>
                                 </Frames>
                             </Frame>
                         </Frames>

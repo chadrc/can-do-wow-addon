@@ -273,7 +273,21 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
         circle = "Circle",
     };
 
-    initDropdown(arrangementForm.arrangementDropdown, arrangement, 'type', arrangementOptions);
+    initDropdown(
+        arrangementForm.arrangementDropdown, 
+        arrangement, 
+        'type', 
+        arrangementOptions,
+        function (v)
+            if v == "grid" then
+                arrangementForm.gridOptions:Show();
+                arrangementForm.circleOptions:Hide();
+            else
+                arrangementForm.gridOptions:Hide();
+                arrangementForm.circleOptions:Show();
+            end
+        end
+    );
 
     local value = arrangement.rows;
     local mock = {
@@ -306,6 +320,11 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
             arrangement.rows = 0;
         end
     end)
+
+    arrangementForm.circleOptions.diameterSlider:SetValueStep(1);
+    arrangementForm.circleOptions.diameterSlider:SetMinMaxValues(0, UIParent:GetHeight());
+    arrangementForm.circleOptions.diameterSlider:SetValue(arrangement.diameter);
+    arrangementForm.circleOptions.diameterSlider.valueLabel:SetText(arrangement.diameter);
 end
 
 function CanDoEditor_SetupDisplayPanel(editor)
@@ -405,6 +424,13 @@ function CanDoEditor_SetupDisplayPanel(editor)
         local newValue = math.floor(arrangementForm.gridOptions.paddingSlider:GetValue());
         editor.currentButton.data.display.arrangement.padding = newValue;
         arrangementForm.gridOptions.paddingSlider.valueLabel:SetText(newValue);
+        editor.redrawFrames();
+    end)
+
+    arrangementForm.circleOptions.diameterSlider:SetScript("OnValueChanged", function ()
+        local newValue = math.floor(arrangementForm.circleOptions.diameterSlider:GetValue());
+        editor.currentButton.data.display.arrangement.diameter = newValue;
+        arrangementForm.circleOptions.diameterSlider.valueLabel:SetText(newValue);
         editor.redrawFrames();
     end)
 end
