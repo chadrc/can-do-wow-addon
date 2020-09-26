@@ -273,7 +273,8 @@
                         </Layers>
 
                         <Frames>
-                            <Frame parentKey="positioningDropdown" name="$parentPositioningDropdown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+                            <!-- Hiding for now, decide if relative positioning is enough. Ideally would be drag and drop anyway -->
+                            <!-- <Frame parentKey="positioningDropdown" name="$parentPositioningDropdown" inherits="UIDropDownMenuTemplate" enableMouse="true" hidden="false">
                                 <Size x="175" y="200"/>
 
                                 <Anchors>
@@ -283,7 +284,7 @@
                                         </Offset>
                                     </Anchor>
                                 </Anchors>
-                            </Frame>
+                            </Frame> -->
                             <Slider parentKey="offsetXSlider" name="$parentOffsetXSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="0.1">
                                 <Size x="400" y="17"/>
                                 <Anchors>

@@ -186,32 +186,33 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
 
     local positioningForm = editor.displayOptionsPanel.positioningForm;
     local positioning = display.positioning;
-    local positioningDropdown = positioningForm.positioningDropdown;
+    -- local positioningDropdown = positioningForm.positioningDropdown;
 
-    local labels = {
-        relative = "Relative",
-        absolute = "Absolute"
-    };
+    -- Hiding for now, decide if relative positioning is enough. Ideally would be drag and drop anyway
+    -- local labels = {
+    --     relative = "Relative",
+    --     absolute = "Absolute"
+    -- };
 
-    local function OnDropdownItemClicked(self, arg1, arg2, checked)
-        UIDropDownMenu_SetText(positioningDropdown, labels[arg1]);
-        editor.currentButton.data.display.positioning.type = arg1;
-        editor.redrawFrames();
-        CloseDropDownMenus();
-    end
+    -- local function OnDropdownItemClicked(self, arg1, arg2, checked)
+    --     UIDropDownMenu_SetText(positioningDropdown, labels[arg1]);
+    --     editor.currentButton.data.display.positioning.type = arg1;
+    --     editor.redrawFrames();
+    --     CloseDropDownMenus();
+    -- end
 
-    local function InitDropdownMenu(frame, level, menuList)
-        local info = UIDropDownMenu_CreateInfo();
-        info.func = OnDropdownItemClicked;
-        info.text, info.arg1, info.checked = "Relative", "relative", positioning.type == "relative";
-        UIDropDownMenu_AddButton(info)
-        info.text, info.arg1, info.checked = "Absolute", "absolute", positioning.type == "absolute";
-        UIDropDownMenu_AddButton(info)
-    end
+    -- local function InitDropdownMenu(frame, level, menuList)
+    --     local info = UIDropDownMenu_CreateInfo();
+    --     info.func = OnDropdownItemClicked;
+    --     info.text, info.arg1, info.checked = "Relative", "relative", positioning.type == "relative";
+    --     UIDropDownMenu_AddButton(info)
+    --     info.text, info.arg1, info.checked = "Absolute", "absolute", positioning.type == "absolute";
+    --     UIDropDownMenu_AddButton(info)
+    -- end
 
-    UIDropDownMenu_SetWidth(positioningDropdown, 75);
-    UIDropDownMenu_SetText(positioningDropdown, labels[positioning.type]);
-    UIDropDownMenu_Initialize(positioningDropdown, InitDropdownMenu);
+    -- UIDropDownMenu_SetWidth(positioningDropdown, 75);
+    -- UIDropDownMenu_SetText(positioningDropdown, labels[positioning.type]);
+    -- UIDropDownMenu_Initialize(positioningDropdown, InitDropdownMenu);
 
     positioningForm.offsetXSlider:SetValue(positioning.offsetX);
     positioningForm.offsetXSlider.valueLabel:SetText(CanDo_TwoDecimals(positioning.offsetX));
