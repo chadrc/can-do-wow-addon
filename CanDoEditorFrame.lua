@@ -215,9 +215,14 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     -- UIDropDownMenu_Initialize(positioningDropdown, InitDropdownMenu);
 
     positioningForm.offsetXSlider:SetValue(positioning.offsetX);
-    positioningForm.offsetXSlider.valueLabel:SetText(CanDo_TwoDecimals(positioning.offsetX));
+    positioningForm.offsetXSlider:SetValueStep(1);
+    positioningForm.offsetXSlider:SetMinMaxValues(0, UIParent:GetWidth());
+    positioningForm.offsetXSlider.valueLabel:SetText(positioning.offsetX);
+    
     positioningForm.offsetYSlider:SetValue(positioning.offsetY);
-    positioningForm.offsetYSlider.valueLabel:SetText(CanDo_TwoDecimals(positioning.offsetY));
+    positioningForm.offsetYSlider:SetValueStep(1);
+    positioningForm.offsetYSlider:SetMinMaxValues(0, UIParent:GetHeight());
+    positioningForm.offsetYSlider.valueLabel:SetText(positioning.offsetY);
 
     local anchorLabels = {
         CENTER = "CENTER",
@@ -231,12 +236,15 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
         BOTTOMRIGHT = "BOTTOMRIGHT",
     };
 
-    local function initAnchorDropdown(dropdown, data, dataProp, labels)
+    local function initDropdown(dropdown, data, dataProp, labels, onchange)
         local function OnAnchorDropdownItemClicked(self, arg1, arg2, checked)
-            UIDropDownMenu_SetText(dropdown, arg1);
+            UIDropDownMenu_SetText(dropdown, arg2);
             data[dataProp] = arg1;
             editor.redrawFrames();
             CloseDropDownMenus();
+            if onchange ~= nil then
+                onchange(arg1);
+            end
         end
 
         local function InitAnchorDropdownMenu(frame, level, menuList)
@@ -244,18 +252,28 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
             info.func = OnAnchorDropdownItemClicked;
 
             for k, v in pairs(labels) do
-                info.text, info.arg1, info.checked = v, k, data[dataProp] == v;
+                info.text, info.arg1, info.arg2, info.checked = v, k, v, data[dataProp] == k;
                 UIDropDownMenu_AddButton(info)
             end
         end
 
         UIDropDownMenu_SetWidth(dropdown, 75);
-        UIDropDownMenu_SetText(dropdown, data[dataProp]);
+        UIDropDownMenu_SetText(dropdown, labels[data[dataProp]]);
         UIDropDownMenu_Initialize(dropdown, InitAnchorDropdownMenu);
     end
 
-    initAnchorDropdown(positioningForm.anchorDropdown, positioning, 'anchor', anchorLabels);
-    initAnchorDropdown(positioningForm.relativeAnchorDropDown, positioning, 'relativeAnchor', anchorLabels);
+    initDropdown(positioningForm.anchorDropdown, positioning, 'anchor', anchorLabels);
+    initDropdown(positioningForm.relativeAnchorDropDown, positioning, 'relativeAnchor', anchorLabels);
+
+
+    local arrangementForm = editor.displayOptionsPanel.arrangementForm;
+    local arrangement = display.arrangement;
+    local arrangementOptions = {
+        grid = "Grid",
+        circle = "Circle",
+    };
+
+    initDropdown(arrangementForm.arrangementDropdown, arrangement, 'type', arrangementOptions);
 end
 
 function CanDoEditor_SetupDisplayPanel(editor)
@@ -322,20 +340,16 @@ function CanDoEditor_SetupDisplayPanel(editor)
     local positioningForm = editor.displayOptionsPanel.positioningForm;
 
     positioningForm.offsetXSlider:SetScript("OnValueChanged", function ()
-        local newValue = positioningForm.offsetXSlider:GetValue();
+        local newValue = math.floor(positioningForm.offsetXSlider:GetValue());
         editor.currentButton.data.display.positioning.offsetX = newValue;
-        positioningForm.offsetXSlider.valueLabel:SetText(CanDo_TwoDecimals(newValue));
+        positioningForm.offsetXSlider.valueLabel:SetText(newValue);
         editor.redrawFrames();
     end)
 
     positioningForm.offsetYSlider:SetScript("OnValueChanged", function ()
-        local newValue = positioningForm.offsetYSlider:GetValue();
+        local newValue = math.floor(positioningForm.offsetYSlider:GetValue());
         editor.currentButton.data.display.positioning.offsetY = newValue;
-        positioningForm.offsetYSlider.valueLabel:SetText(CanDo_TwoDecimals(newValue));
+        positioningForm.offsetYSlider.valueLabel:SetText(newValue);
         editor.redrawFrames();
     end)
-end
-
-function CanDo_TwoDecimals(v)
-    return string.format("%.2f", v);
 end

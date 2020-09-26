@@ -382,7 +382,7 @@
                             <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>
                         </Scripts>
                     </Frame>
-                    <Frame name="$parentArrangementForm">
+                    <Frame parentKey="arrangementForm" name="$parentArrangementForm">
                         <Size x="175" y="200"/>
 
                         <Anchors>
@@ -397,6 +397,64 @@
                                 </FontString>
                             </Layer>
                         </Layers>
+                        <Frames>
+                            <Frame parentKey="arrangementDropdown" name="$parentArrangementDropdown" inherits="UIDropDownMenuTemplate" enableMouse="true">
+                                <Size x="175" y="200"/>
+
+                                <Anchors>
+                                    <Anchor point="LEFT" relativeTo="$parentHeader" relativePoint="RIGHT">
+                                        <Offset>
+                                            <AbsDimension x="13" y="0"/>
+                                        </Offset>
+                                    </Anchor>
+                                </Anchors>
+                            </Frame>
+                            <Frame parentKey="gridOptions" name="$parentGridOptions">
+                                <Size x="175" y="150"/>
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="$parentHeader" y="-10"/>
+                                </Anchors>
+                                <Layers>
+                                    <Layer>
+                                        <FontString parentKey="header" name="$parentHeader" text="Grid" inherits="GameFontNormal" justifyH="LEFT">
+                                            <Size x="175" y="20"/>
+
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT" x="13" y="-13"/>
+                                            </Anchors>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+                                <Frames>
+                                    <Frame>
+                                        <Size x="175" y="20"/>
+                                    </Frame>
+                                </Frames>
+                            </Frame>
+                            <Frame parentKey="circleOptions" name="$parentCircleOptions">
+                                <Size x="175" y="150"/>
+
+                                <Anchors>
+                                    <Anchor point="TOPLEFT" relativeTo="$parentHeader" y="-10"/>
+                                </Anchors>
+                                <Layers>
+                                    <Layer>
+                                        <FontString parentKey="header" name="$parentHeader" text="Circle" inherits="GameFontNormal" justifyH="LEFT">
+                                            <Size x="175" y="20"/>
+
+                                            <Anchors>
+                                                <Anchor point="TOPLEFT" x="13" y="-13"/>
+                                            </Anchors>
+                                        </FontString>
+                                    </Layer>
+                                </Layers>
+                                <Frames>
+                                    <Frame>
+                                        <Size x="175" y="20"/>
+                                    </Frame>
+                                </Frames>
+                            </Frame>
+                        </Frames>
                         <Scripts>
                             <OnLoad>self.header:SetFont(self.header:GetFont(), 18)</OnLoad>
                         </Scripts>

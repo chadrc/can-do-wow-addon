@@ -129,6 +129,7 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
     local buttonSize = frame.display.buttonSize;
 
     local parentFrame = NextFrameInPool();
+    parentFrame:ClearAllPoints();
     local backClr = frame.display.backgroundColor;
     parentFrame:SetBackdropColor(backClr.r, backClr.g, backClr.b, backClr.a);
 
@@ -136,8 +137,6 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
         local rowCount = frame.display.arrangement.rows;
         local colCount = frame.display.arrangement.columns;
         local padding = frame.display.arrangement.padding;
-        activeFrame.totalWidth = buttonSize * colCount + padding * (colCount + 1);
-        activeFrame.totalHeight = buttonSize * rowCount + padding * (rowCount + 1);
     
         if colCount == 0 then
             -- should have rowCount
@@ -147,25 +146,15 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
             rowCount = math.ceil(itemCount / colCount);
         end
 
+        activeFrame.totalWidth = buttonSize * colCount + padding * (colCount + 1);
+        activeFrame.totalHeight = buttonSize * rowCount + padding * (rowCount + 1);
+
         activeFrame.colCount = colCount;
         activeFrame.rowCount = rowCount;
     elseif frame.display.arrangement.type == "circle" then
         activeFrame.angleStep = 360 / itemCount;
-        if frame.display.arrangement.sizing == "absolute" then
-            activeFrame.radius = frame.display.arrangement.diameter / 2 - buttonSize / 2;
-            activeFrame.totalWidth = frame.display.arrangement.diameter;
-        elseif frame.display.arrangement.sizing == "relative" then
-            if frame.display.arrangement.relativeTo == "height" then
-                local absDiameter = parentFrame:GetParent():GetHeight() * frame.display.arrangement.diameter;
-                activeFrame.radius = absDiameter / 2 - buttonSize / 2;
-                activeFrame.totalWidth = absDiameter;
-            elseif frame.display.arrangement.relativeTo == "width" then
-                local absDiameter = parentFrame:GetParent():GetWidth() * frame.display.arrangement.diameter;
-                activeFrame.radius = absDiameter / 2 - buttonSize / 2;
-                activeFrame.totalWidth = absDiameter;
-            end
-        end
-
+        activeFrame.radius = frame.display.arrangement.diameter / 2 - buttonSize / 2;
+        activeFrame.totalWidth = frame.display.arrangement.diameter;
         activeFrame.totalHeight = activeFrame.totalWidth;
     end
 
@@ -195,10 +184,11 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
 
     for k, v in pairs(frame.items) do
         local actionButton = CanDoMainFrame_CreateCanDoItem(v, frame, activeFrame);
+        actionButton.frame:ClearAllPoints();
         activeFrame.items[table.getn(activeFrame.items) + 1] = actionButton;
 
+        local i = k - 1;
         if frame.display.arrangement.type == "grid" then
-            local i = k - 1;
             local row = math.floor(i / activeFrame.colCount);
             local col = i % activeFrame.colCount;
         
@@ -207,10 +197,7 @@ function CanDoMainFrame_CreateGridFrame(frame, activeFrame)
     
             actionButton.frame:SetPoint("TOPLEFT", activeFrame.parentFrame, "TOPLEFT", offsetX, -offsetY);
         elseif frame.display.arrangement.type == "circle" then
-            local radius = frame.display.arrangement.diameter / 2;
-            -- cos = x / h
-            -- sin = y / h
-            local angle = (k - 1) * activeFrame.angleStep;
+            local angle = i * activeFrame.angleStep;
 
             local y = math.sin(math.rad(angle)) * activeFrame.radius;
             local x = math.cos(math.rad(angle)) * activeFrame.radius;

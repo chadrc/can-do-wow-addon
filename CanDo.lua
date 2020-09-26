@@ -16,6 +16,9 @@ function CanDo_CreateEmptyFrame(name)
                 rows = 3,
                 columns = 4,
                 padding = 5,
+                -- sizing = "absolute", -- "relative"
+                -- relativeTo = "width",
+                -- diameter = 300,
             },
             positioning = {
                 type = "absolute",
@@ -40,36 +43,26 @@ function CanDo_CreateInitialCharacterData()
                     activeButtonAlpha = .5,
                     inactiveButtonAlpha = .15,
                     -- arrangement = {
-                    --     type = "grid",
-                    --     rows = 0,
-                    --     columns = 2,
-                    --     padding = 5,
                     -- },
                     arrangement = {
                         type = "circle",
-                        -- sizing = "absolute",
-                        sizing = "relative",
-                        relativeTo = "height",
+                        sizing = "absolute",
+                        -- sizing = "relative",
                         -- relativeTo = "width",
-                        diameter = .25,
+                        diameter = 300,
+                    --     type = "grid",
+                        rows = 0,
+                        columns = 2,
+                        padding = 5,
                     },
                     -- values match call to SetPoint on Frame widgets
                     positioning = {
-                        type = "relative",
+                        type = "absolute",
                         anchor = "CENTER",
                         relativeAnchor = "CENTER",
-                        -- values in percentage of screen
                         offsetX = 0,
-                        offsetY = -.05,
+                        offsetY = 0,
                     },
-                    -- positioning = {
-                    --     type = "absolute",
-                    --     anchor = "CENTER",
-                    --     relativeAnchor = "CENTER",
-                    --     -- absolute pixel values
-                    --     offsetX = 0,
-                    --     offsetY = -200,
-                    -- },
                 },
                 items = {
                     {
