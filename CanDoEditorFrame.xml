@@ -273,18 +273,6 @@
                         </Layers>
 
                         <Frames>
-                            <!-- Hiding for now, decide if relative positioning is enough. Ideally would be drag and drop anyway -->
-                            <!-- <Frame parentKey="positioningDropdown" name="$parentPositioningDropdown" inherits="UIDropDownMenuTemplate" enableMouse="true" hidden="false">
-                                <Size x="175" y="200"/>
-
-                                <Anchors>
-                                    <Anchor point="LEFT" relativeTo="$parentHeader" relativePoint="RIGHT">
-                                        <Offset>
-                                            <AbsDimension x="13" y="0"/>
-                                        </Offset>
-                                    </Anchor>
-                                </Anchors>
-                            </Frame> -->
                             <Slider parentKey="offsetXSlider" name="$parentOffsetXSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="0.1">
                                 <Size x="400" y="17"/>
                                 <Anchors>
@@ -374,7 +362,6 @@
 
                                 <Anchors>
                                     <Anchor point="LEFT" relativeTo="$parentAnchorDropdown" relativePoint="RIGHT"/>
-                                    <!-- <Anchor point="TOP" relativeTo="$parentAnchorDropdown" relativePoint="BOTTOM" y="-15"/> -->
                                 </Anchors>
                             </Frame>
                         </Frames>
@@ -414,17 +401,6 @@
                                 <Anchors>
                                     <Anchor point="TOPLEFT" relativeTo="$parentHeader" y="-10"/>
                                 </Anchors>
-                                <!-- <Layers>
-                                    <Layer>
-                                        <FontString parentKey="header" name="$parentHeader" text="Grid" inherits="GameFontNormal" justifyH="LEFT">
-                                            <Size x="175" y="20"/>
-
-                                            <Anchors>
-                                                <Anchor point="TOPLEFT" x="13" y="-13"/>
-                                            </Anchors>
-                                        </FontString>
-                                    </Layer>
-                                </Layers> -->
                                 <Frames>
                                     <Frame parentKey="rowColDropdown" name="$parentRowColDropdown" inherits="UIDropDownMenuTemplate" enableMouse="true">
                                         <Size x="175" y="20"/>
@@ -440,7 +416,35 @@
                                         </Anchors>
                                         <Layers>
                                             <Layer level="ARTWORK">
-                                                <!-- <FontString name="$parentLabel" inherits="GameFontNormal" text="Offset Y">
+                                                <FontString parentKey="valueLabel" name="$parentValueLabel" inherits="GameFontNormalSmall" text="Offset Y" justifyH="LEFT">
+                                                    <Size x="150" y="14"/>
+                                                    <Anchors>
+                                                        <Anchor point="LEFT" relativePoint="RIGHT">
+                                                            <Offset>
+                                                                <AbsDimension x="10" y="1"/>
+                                                            </Offset>
+                                                        </Anchor>
+                                                    </Anchors>
+                                                </FontString>
+                                            </Layer>
+                                        </Layers>
+                                        <Scripts>
+                                            <OnLoad>
+                                                    local name = self:GetName();
+                                                    _G[name.."Low"]:Hide();
+                                                    _G[name.."High"]:Hide();
+                                            </OnLoad>
+                                        </Scripts>
+                                    </Slider>
+                                    <Slider parentKey="paddingSlider" name="$parentPaddingSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
+                                        <Size x="300" y="17"/>
+                                        <Anchors>
+                                            <Anchor point="LEFT" relativeTo="$parentRowColSlider"/>
+                                            <Anchor point="TOP" relativeTo="$parentRowColSlider" relativePoint="BOTTOM" y="-10"/>
+                                        </Anchors>
+                                        <Layers>
+                                            <Layer level="ARTWORK">
+                                                <FontString name="$parentLabel" inherits="GameFontNormal" text="Spacing">
                                                     <Size x="150" y="14"/>
                                                     <Anchors>
                                                         <Anchor point="RIGHT" relativePoint="LEFT">
@@ -449,8 +453,8 @@
                                                             </Offset>
                                                         </Anchor>
                                                     </Anchors>
-                                                </FontString> -->
-                                                <FontString parentKey="valueLabel" name="$parentValueLabel" inherits="GameFontNormalSmall" text="Offset Y" justifyH="LEFT">
+                                                </FontString>
+                                                <FontString parentKey="valueLabel" name="$parentValueLabel" inherits="GameFontNormalSmall" text="Spacing" justifyH="LEFT">
                                                     <Size x="150" y="14"/>
                                                     <Anchors>
                                                         <Anchor point="LEFT" relativePoint="RIGHT">

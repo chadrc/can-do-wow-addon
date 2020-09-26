@@ -288,6 +288,11 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     arrangementForm.gridOptions.rowColSlider:SetMinMaxValues(1, table.getn(data.items));
     arrangementForm.gridOptions.rowColSlider:SetValue(value);
     arrangementForm.gridOptions.rowColSlider.valueLabel:SetText(value);
+    
+    arrangementForm.gridOptions.paddingSlider:SetValueStep(1);
+    arrangementForm.gridOptions.paddingSlider:SetMinMaxValues(0, 100);
+    arrangementForm.gridOptions.paddingSlider:SetValue(arrangement.padding);
+    arrangementForm.gridOptions.paddingSlider.valueLabel:SetText(arrangement.padding);
 
     initDropdown(arrangementForm.gridOptions.rowColDropdown, mock, "opt", {
         rows = "Rows",
@@ -393,6 +398,13 @@ function CanDoEditor_SetupDisplayPanel(editor)
             arrangement.rows = newValue;
         end
         arrangementForm.gridOptions.rowColSlider.valueLabel:SetText(newValue);
+        editor.redrawFrames();
+    end)
+
+    arrangementForm.gridOptions.paddingSlider:SetScript("OnValueChanged", function ()
+        local newValue = math.floor(arrangementForm.gridOptions.paddingSlider:GetValue());
+        editor.currentButton.data.display.arrangement.padding = newValue;
+        arrangementForm.gridOptions.paddingSlider.valueLabel:SetText(newValue);
         editor.redrawFrames();
     end)
 end
