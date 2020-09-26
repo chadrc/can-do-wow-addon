@@ -414,7 +414,7 @@
                                 <Anchors>
                                     <Anchor point="TOPLEFT" relativeTo="$parentHeader" y="-10"/>
                                 </Anchors>
-                                <Layers>
+                                <!-- <Layers>
                                     <Layer>
                                         <FontString parentKey="header" name="$parentHeader" text="Grid" inherits="GameFontNormal" justifyH="LEFT">
                                             <Size x="175" y="20"/>
@@ -424,14 +424,55 @@
                                             </Anchors>
                                         </FontString>
                                     </Layer>
-                                </Layers>
+                                </Layers> -->
                                 <Frames>
-                                    <Frame>
+                                    <Frame parentKey="rowColDropdown" name="$parentRowColDropdown" inherits="UIDropDownMenuTemplate" enableMouse="true">
                                         <Size x="175" y="20"/>
+
+                                        <Anchors>
+                                            <Anchor point="TOPLEFT" x="-10" y="-20"/>
+                                        </Anchors>
                                     </Frame>
+                                    <Slider parentKey="rowColSlider" name="$parentRowColSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
+                                        <Size x="300" y="17"/>
+                                        <Anchors>
+                                            <Anchor point="LEFT" relativeTo="$parentRowColDropdown" relativePoint="RIGHT" x="20"/>
+                                        </Anchors>
+                                        <Layers>
+                                            <Layer level="ARTWORK">
+                                                <!-- <FontString name="$parentLabel" inherits="GameFontNormal" text="Offset Y">
+                                                    <Size x="150" y="14"/>
+                                                    <Anchors>
+                                                        <Anchor point="RIGHT" relativePoint="LEFT">
+                                                            <Offset>
+                                                                <AbsDimension x="-4" y="1"/>
+                                                            </Offset>
+                                                        </Anchor>
+                                                    </Anchors>
+                                                </FontString> -->
+                                                <FontString parentKey="valueLabel" name="$parentValueLabel" inherits="GameFontNormalSmall" text="Offset Y" justifyH="LEFT">
+                                                    <Size x="150" y="14"/>
+                                                    <Anchors>
+                                                        <Anchor point="LEFT" relativePoint="RIGHT">
+                                                            <Offset>
+                                                                <AbsDimension x="10" y="1"/>
+                                                            </Offset>
+                                                        </Anchor>
+                                                    </Anchors>
+                                                </FontString>
+                                            </Layer>
+                                        </Layers>
+                                        <Scripts>
+                                            <OnLoad>
+                                                    local name = self:GetName();
+                                                    _G[name.."Low"]:Hide();
+                                                    _G[name.."High"]:Hide();
+                                            </OnLoad>
+                                        </Scripts>
+                                    </Slider>
                                 </Frames>
                             </Frame>
-                            <Frame parentKey="circleOptions" name="$parentCircleOptions">
+                            <Frame parentKey="circleOptions" name="$parentCircleOptions" hidden="true">
                                 <Size x="175" y="150"/>
 
                                 <Anchors>

@@ -45,14 +45,14 @@ function CanDo_CreateInitialCharacterData()
                     -- arrangement = {
                     -- },
                     arrangement = {
-                        type = "circle",
+                        -- type = "circle",
                         sizing = "absolute",
                         -- sizing = "relative",
                         -- relativeTo = "width",
                         diameter = 300,
-                    --     type = "grid",
+                        type = "grid",
                         rows = 0,
-                        columns = 2,
+                        columns = 3,
                         padding = 5,
                     },
                     -- values match call to SetPoint on Frame widgets
@@ -60,7 +60,7 @@ function CanDo_CreateInitialCharacterData()
                         type = "absolute",
                         anchor = "CENTER",
                         relativeAnchor = "CENTER",
-                        offsetX = 0,
+                        offsetX = 300,
                         offsetY = 0,
                     },
                 },

@@ -214,14 +214,14 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     -- UIDropDownMenu_SetText(positioningDropdown, labels[positioning.type]);
     -- UIDropDownMenu_Initialize(positioningDropdown, InitDropdownMenu);
 
-    positioningForm.offsetXSlider:SetValue(positioning.offsetX);
     positioningForm.offsetXSlider:SetValueStep(1);
     positioningForm.offsetXSlider:SetMinMaxValues(0, UIParent:GetWidth());
+    positioningForm.offsetXSlider:SetValue(positioning.offsetX);
     positioningForm.offsetXSlider.valueLabel:SetText(positioning.offsetX);
     
-    positioningForm.offsetYSlider:SetValue(positioning.offsetY);
     positioningForm.offsetYSlider:SetValueStep(1);
     positioningForm.offsetYSlider:SetMinMaxValues(0, UIParent:GetHeight());
+    positioningForm.offsetYSlider:SetValue(positioning.offsetY);
     positioningForm.offsetYSlider.valueLabel:SetText(positioning.offsetY);
 
     local anchorLabels = {
@@ -238,13 +238,13 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
 
     local function initDropdown(dropdown, data, dataProp, labels, onchange)
         local function OnAnchorDropdownItemClicked(self, arg1, arg2, checked)
+            if onchange ~= nil then
+                onchange(arg1);
+            end
             UIDropDownMenu_SetText(dropdown, arg2);
             data[dataProp] = arg1;
             editor.redrawFrames();
             CloseDropDownMenus();
-            if onchange ~= nil then
-                onchange(arg1);
-            end
         end
 
         local function InitAnchorDropdownMenu(frame, level, menuList)
@@ -274,6 +274,33 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     };
 
     initDropdown(arrangementForm.arrangementDropdown, arrangement, 'type', arrangementOptions);
+
+    local value = arrangement.rows;
+    local mock = {
+        opt = "rows"
+    };
+    if value == 0 then
+        value = arrangement.columns;
+        mock.opt = "columns";
+    end
+    
+    arrangementForm.gridOptions.rowColSlider:SetValueStep(1);
+    arrangementForm.gridOptions.rowColSlider:SetMinMaxValues(1, table.getn(data.items));
+    arrangementForm.gridOptions.rowColSlider:SetValue(value);
+    arrangementForm.gridOptions.rowColSlider.valueLabel:SetText(value);
+
+    initDropdown(arrangementForm.gridOptions.rowColDropdown, mock, "opt", {
+        rows = "Rows",
+        columns = "Columns"
+    }, function (prop)
+        if prop == "rows" then
+            arrangement.rows = arrangement.columns;
+            arrangement.columns = 0;
+        else
+            arrangement.columns = arrangement.rows;
+            arrangement.rows = 0;
+        end
+    end)
 end
 
 function CanDoEditor_SetupDisplayPanel(editor)
@@ -340,6 +367,7 @@ function CanDoEditor_SetupDisplayPanel(editor)
     local positioningForm = editor.displayOptionsPanel.positioningForm;
 
     positioningForm.offsetXSlider:SetScript("OnValueChanged", function ()
+
         local newValue = math.floor(positioningForm.offsetXSlider:GetValue());
         editor.currentButton.data.display.positioning.offsetX = newValue;
         positioningForm.offsetXSlider.valueLabel:SetText(newValue);
@@ -350,6 +378,21 @@ function CanDoEditor_SetupDisplayPanel(editor)
         local newValue = math.floor(positioningForm.offsetYSlider:GetValue());
         editor.currentButton.data.display.positioning.offsetY = newValue;
         positioningForm.offsetYSlider.valueLabel:SetText(newValue);
+        editor.redrawFrames();
+    end)
+
+    -- Arrangement Form
+    local arrangementForm = editor.displayOptionsPanel.arrangementForm;
+
+    arrangementForm.gridOptions.rowColSlider:SetScript("OnValueChanged", function ()
+        local newValue = math.floor(arrangementForm.gridOptions.rowColSlider:GetValue());
+        local arrangement = editor.currentButton.data.display.arrangement;
+        if arrangement.rows == 0 then
+            arrangement.columns = newValue;
+        else
+            arrangement.rows = newValue;
+        end
+        arrangementForm.gridOptions.rowColSlider.valueLabel:SetText(newValue);
         editor.redrawFrames();
     end)
 end
