@@ -214,7 +214,9 @@ function CanDoEditorUpdateDisplayPanel(editor, data)
     UIDropDownMenu_Initialize(positioningDropdown, InitDropdownMenu);
 
     positioningForm.offsetXSlider:SetValue(positioning.offsetX);
+    positioningForm.offsetXSlider.valueLabel:SetText(CanDo_TwoDecimals(positioning.offsetX));
     positioningForm.offsetYSlider:SetValue(positioning.offsetY);
+    positioningForm.offsetYSlider.valueLabel:SetText(CanDo_TwoDecimals(positioning.offsetY));
 
     local anchorLabels = {
         CENTER = "CENTER",
@@ -321,13 +323,18 @@ function CanDoEditor_SetupDisplayPanel(editor)
     positioningForm.offsetXSlider:SetScript("OnValueChanged", function ()
         local newValue = positioningForm.offsetXSlider:GetValue();
         editor.currentButton.data.display.positioning.offsetX = newValue;
+        positioningForm.offsetXSlider.valueLabel:SetText(CanDo_TwoDecimals(newValue));
         editor.redrawFrames();
     end)
 
     positioningForm.offsetYSlider:SetScript("OnValueChanged", function ()
         local newValue = positioningForm.offsetYSlider:GetValue();
         editor.currentButton.data.display.positioning.offsetY = newValue;
+        positioningForm.offsetYSlider.valueLabel:SetText(CanDo_TwoDecimals(newValue));
         editor.redrawFrames();
     end)
 end
 
+function CanDo_TwoDecimals(v)
+    return string.format("%.2f", v);
+end

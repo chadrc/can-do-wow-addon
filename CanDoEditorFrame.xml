@@ -195,7 +195,7 @@
                                     </Frame>
                                 </Frames>
                             </Frame>
-                            <Slider parentKey="activeButtonAlphaSlider" name="$parentActiveButtonAlphaSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
+                            <Slider parentKey="activeButtonAlphaSlider" name="$parentActiveButtonAlphaSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="0.1">
                                 <Size x="400" y="17"/>
                                 <Anchors>
                                     <Anchor point="LEFT" relativeTo="$parentHeader" x="148"/>
@@ -223,7 +223,7 @@
                                     </OnLoad>
                                 </Scripts>
                             </Slider>
-                            <Slider parentKey="inactiveButtonAlphaSlider" name="$parentInactiveButtonAlphaSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
+                            <Slider parentKey="inactiveButtonAlphaSlider" name="$parentInactiveButtonAlphaSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="0.1">
                                 <Size x="400" y="17"/>
                                 <Anchors>
                                     <Anchor point="LEFT" relativeTo="$parentHeader" x="153"/>
@@ -284,7 +284,7 @@
                                     </Anchor>
                                 </Anchors>
                             </Frame>
-                            <Slider parentKey="offsetXSlider" name="$parentOffsetXSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
+                            <Slider parentKey="offsetXSlider" name="$parentOffsetXSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="0.1">
                                 <Size x="400" y="17"/>
                                 <Anchors>
                                     <Anchor point="LEFT" relativeTo="$parentHeader" x="114"/>
@@ -302,6 +302,16 @@
                                                 </Anchor>
                                             </Anchors>
                                         </FontString>
+                                        <FontString parentKey="valueLabel" name="$parentValueLabel" inherits="GameFontNormalSmall" text="Offset X" justifyH="LEFT">
+                                            <Size x="150" y="14"/>
+                                            <Anchors>
+                                                <Anchor point="LEFT" relativePoint="RIGHT">
+                                                    <Offset>
+                                                        <AbsDimension x="10" y="1"/>
+                                                    </Offset>
+                                                </Anchor>
+                                            </Anchors>
+                                        </FontString>
                                     </Layer>
                                 </Layers>
                                 <Scripts>
@@ -312,7 +322,7 @@
                                     </OnLoad>
                                 </Scripts>
                             </Slider>
-                            <Slider parentKey="offsetYSlider" name="$parentOffsetYSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="1.0">
+                            <Slider parentKey="offsetYSlider" name="$parentOffsetYSlider" inherits="OptionsSliderTemplate" minvalue="0" maxvalue="1.0" valuestep="0.1">
                                 <Size x="400" y="17"/>
                                 <Anchors>
                                     <Anchor point="LEFT" relativeTo="$parentHeader" x="114"/>
@@ -326,6 +336,16 @@
                                                 <Anchor point="RIGHT" relativePoint="LEFT">
                                                     <Offset>
                                                         <AbsDimension x="-4" y="1"/>
+                                                    </Offset>
+                                                </Anchor>
+                                            </Anchors>
+                                        </FontString>
+                                        <FontString parentKey="valueLabel" name="$parentValueLabel" inherits="GameFontNormalSmall" text="Offset Y" justifyH="LEFT">
+                                            <Size x="150" y="14"/>
+                                            <Anchors>
+                                                <Anchor point="LEFT" relativePoint="RIGHT">
+                                                    <Offset>
+                                                        <AbsDimension x="10" y="1"/>
                                                     </Offset>
                                                 </Anchor>
                                             </Anchors>
